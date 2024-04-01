@@ -357,7 +357,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                 padding: "7px",
               }}
             >
-              {T._("Personalizează", "Composer")}
+              {"Personalize"}
             </span>
           </div>
           {selectedPersonalize ? (
