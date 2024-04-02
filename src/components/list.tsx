@@ -1,16 +1,17 @@
 import styled from "styled-components";
 
-export const List = styled.ul`
+export const List = styled.ul<{isShelterColor?: boolean}>`
     position: relative;
     margin: 0;
-    padding: 0;
+    padding: 10px;
     display: flex;
     align-items: center;
     margin-top: 5px;
     margin-bottom: 17px; 
-    border-radius: 50px;
+    // border-radius: 50px;
     white-space: nowrap;
     justify-content: center;
+    // border-top: ${props => props.isShelterColor ? '1.5px solid gray' : ''};
 
     @media screen and (max-width: 568px) {
         width: 100vw;

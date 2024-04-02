@@ -464,19 +464,21 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
               !selectedTrayPreviewOpenButton &&
               selectedGroup.steps.length > 0 &&
               !isTrayOpen && (
-                <List>
-                  {selectedGroup.steps.map((step) => {
-                    return (
-                      <ListItem
-                        key={step.id}
-                        onClick={() => selectStep(step.id)}
-                        selected={selectedStep === step}
-                      >
-                        {step.name}
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                <>
+                  <List>
+                    {selectedGroup.steps.map((step) => {
+                      return (
+                        <ListItem
+                          key={step.id}
+                          onClick={() => selectStep(step.id)}
+                          selected={selectedStep === step}
+                        >
+                          {step.name}
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </>
               )}
 
             {!selectedTrayPreviewOpenButton && (
@@ -538,52 +540,63 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
                 {width > 400 && (
                   <>
-                    {selectedAttribute &&
-                      selectedAttribute.code === "Shelter Colors" &&
-                      selectedAttribute.enabled === true &&
-                      selectedAttribute.options.length > 0 && (
-                        <List>
-                          {!selectedTrayPreviewOpenButton &&
-                            selectedAttribute.options.map((option) => {
-                              if (option.enabled === false) return <></>;
-                              console.log(selectedAttribute);
-
-                              return (
-                                <ListItemColor
-                                  key={option.id}
-                                  onClick={() => {
-                                    selectOption(option.id);
-                                    selectOptionId(option.id);
-                                    selectOptionName(option.name);
-                                  }}
-                                  selected={option.selected}
-                                  selectedColor={selectedColorName}
-                                >
-                                  {option.imageUrl && (
-                                    <ListItemImageNoCarousel
-                                      src={option.imageUrl}
-                                      onClick={() =>
-                                        selectColorName(option.name)
-                                      }
-                                      selected={option.selected}
-                                    />
-                                  )}
-
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      top: "105%",
-                                    }}
-                                  >
-                                    {option.id === selectedOptionId
-                                      ? option.name
-                                      : ""}
-                                  </div>
-                                </ListItemColor>
-                              );
-                            })}
-                        </List>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "cursive",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      {selectedAttribute?.code === "Shelter Colors" && (
+                        <h5>Select Color Family</h5>
                       )}
+                      {selectedAttribute &&
+                        selectedAttribute.code === "Shelter Colors" &&
+                        selectedAttribute.enabled === true &&
+                        selectedAttribute.options.length > 0 && (
+                          <List>
+                            {!selectedTrayPreviewOpenButton &&
+                              selectedAttribute.options.map((option) => {
+                                if (option.enabled === false) return <></>;
+                                return (
+                                  <ListItemColor
+                                    key={option.id}
+                                    onClick={() => {
+                                      selectOption(option.id);
+                                      selectOptionId(option.id);
+                                      selectOptionName(option.name);
+                                    }}
+                                    selected={option.selected}
+                                    selectedColor={selectedColorName}
+                                  >
+                                    {option.imageUrl && (
+                                      <ListItemImageNoCarousel
+                                        src={option.imageUrl}
+                                        onClick={() =>
+                                          selectColorName(option.name)
+                                        }
+                                        selected={option.selected}
+                                      />
+                                    )}
+
+                                    <div
+                                      style={{
+                                        position: "absolute",
+                                        top: "105%",
+                                      }}
+                                    >
+                                      {option.id === selectedOptionId
+                                        ? option.name
+                                        : ""}
+                                    </div>
+                                  </ListItemColor>
+                                );
+                              })}
+                          </List>
+                        )}
+                    </div>
                   </>
                 )}
 
@@ -631,20 +644,92 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                   </>
                 )} */}
 
-                {selectedGroup &&
-                  selectedGroup.attributes &&
-                  selectedGroup.attributes.length > 0 && (
-                    <List>
-                      {selectedGroup.attributes.map((opts, i) => {
-                        console.log(opts, "optsoptsoptsoptsopts");
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "cursive",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {selectedAttribute?.code === "Shelter Colors" && (
+                    <h5 style={{ paddingBottom: "16px" }}>
+                      <span>Select Color From Palette</span>
+                    </h5>
+                  )}
+                  {selectedGroup &&
+                    selectedGroup.attributes &&
+                    selectedGroup.attributes.length > 0 && (
+                      <List
+                        isShelterColor={
+                          selectedAttribute?.code === "Shelter Colors"
+                        }
+                      >
+                        {selectedGroup.attributes.map((opts, i) => {
+                          if (opts.options.length <= 9) {
+                            if (opts.enabled) {
+                              return (
+                                opts.enabled &&
+                                opts.options.map((atrOpts) => {
+                                  if (atrOpts.enabled) {
+                                    return (
+                                      <ListItemColor
+                                        onClick={() => {
+                                          selectOption(atrOpts.id);
+                                          selectOptionId(atrOpts.id);
+                                          selectOptionName(atrOpts.name);
+                                        }}
+                                        selected={atrOpts.selected}
+                                        selectedColor={selectedColorName}
+                                      >
+                                        {atrOpts.imageUrl && (
+                                          <ListItemImage
+                                            src={atrOpts.imageUrl}
+                                          />
+                                        )}
 
-                        if (opts.options.length <= 9) {
-                          if (opts.enabled) {
-                            return (
-                              opts.enabled &&
-                              opts.options.map((atrOpts) => {
-                                if (atrOpts.enabled) {
-                                  return (
+                                        <div
+                                          style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                          }}
+                                        >
+                                          {atrOpts.id === selectedOptionId
+                                            ? atrOpts.name
+                                            : ""}
+                                        </div>
+                                      </ListItemColor>
+                                    );
+                                  }
+                                })
+                              );
+                            } else return null;
+                          }
+                        })}
+                      </List>
+                    )}
+
+                  <List>
+                    {selectedGroup &&
+                      selectedGroup.attributes &&
+                      selectedGroup.attributes.map((opts, i) => {
+                        if (opts.enabled === false) return <></>;
+                        if (i > 0 && opts.enabled && opts.options.length > 9) {
+                          return (
+                            <Swiper
+                              spaceBetween={6}
+                              slidesPerView={2}
+                              navigation={true}
+                              // watchOverflow={true}
+                              // centeredSlides={true}
+                              // modules={[Navigation]}
+                              //onSlideChange={() => console.log('slide change')}
+                              //onSwiper={(swiper) => console.log(swiper)}
+                            >
+                              {opts.enabled &&
+                                opts.options.map((atrOpts) => (
+                                  <SwiperSlide key={atrOpts.id}>
                                     <ListItemColor
                                       onClick={() => {
                                         selectOption(atrOpts.id);
@@ -661,76 +746,23 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                                       <div
                                         style={{
                                           position: "absolute",
-                                          top: "100%",
+                                          top: "70%",
                                         }}
                                       >
+                                        {/* {atrOpts.name} */}
                                         {atrOpts.id === selectedOptionId
                                           ? atrOpts.name
                                           : ""}
                                       </div>
                                     </ListItemColor>
-                                  );
-                                }
-                              })
-                            );
-                          } else return null;
-                        }
+                                  </SwiperSlide>
+                                ))}
+                            </Swiper>
+                          );
+                        } else return null;
                       })}
-                    </List>
-                  )}
-
-                <List>
-                  {selectedGroup &&
-                    selectedGroup.attributes &&
-                    selectedGroup.attributes.map((opts, i) => {
-                      if (opts.enabled === false) return <></>;
-                      if (i > 0 && opts.enabled && opts.options.length > 9) {
-                        return (
-                          <Swiper
-                            spaceBetween={6}
-                            slidesPerView={2}
-                            navigation={true}
-                            // watchOverflow={true}
-                            // centeredSlides={true}
-                            // modules={[Navigation]}
-                            //onSlideChange={() => console.log('slide change')}
-                            //onSwiper={(swiper) => console.log(swiper)}
-                          >
-                            {opts.enabled &&
-                              opts.options.map((atrOpts) => (
-                                <SwiperSlide key={atrOpts.id}>
-                                  <ListItemColor
-                                    onClick={() => {
-                                      selectOption(atrOpts.id);
-                                      selectOptionId(atrOpts.id);
-                                      selectOptionName(atrOpts.name);
-                                    }}
-                                    selected={atrOpts.selected}
-                                    selectedColor={selectedColorName}
-                                  >
-                                    {atrOpts.imageUrl && (
-                                      <ListItemImage src={atrOpts.imageUrl} />
-                                    )}
-
-                                    <div
-                                      style={{
-                                        position: "absolute",
-                                        top: "70%",
-                                      }}
-                                    >
-                                      {/* {atrOpts.name} */}
-                                      {atrOpts.id === selectedOptionId
-                                        ? atrOpts.name
-                                        : ""}
-                                    </div>
-                                  </ListItemColor>
-                                </SwiperSlide>
-                              ))}
-                          </Swiper>
-                        );
-                      } else return null;
-                    })}
-                </List>
+                  </List>
+                </div>
 
                 {/* <List>
                   {attributes &&
