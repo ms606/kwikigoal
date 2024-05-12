@@ -10,6 +10,8 @@ import {
   ListItemColor,
   ListItemImage,
   ListItemImageNoCarousel,
+  ListItemColorBig,
+  ListItemImageBig
 } from "./list";
 import { PreviewContainer, BlurOverlay } from "./previewContainer";
 import Tray from "./Tray";
@@ -156,7 +158,6 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
   // Open the first group and the first step when loaded
   useEffect(() => {
-    // console.log("loading in the first group");
 
     if (items?.some((obj) => obj.type === 0)) {
       setHasTypeZero(items?.some((obj) => obj.type === 0));
@@ -304,7 +305,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   const containerStyles = {
     overflow: "auto",
     width: "100%",
-    height: !selectedTrayPreviewOpenButton ? "13rem" : "70px",
+    height: !selectedTrayPreviewOpenButton ? "12rem" : "70px",
   };
 
   return (
@@ -342,7 +343,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
             right: "1%",
             cursor: "pointer",
             marginLeft: "20px",
-            width: "30vw",
+            width: "32vw",
           }}
         >
           <div
@@ -361,7 +362,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
             </span>
           </div>
           {selectedPersonalize ? (
-            <Designer togglePersonalize={togglePersonalize} />
+            <Designer togglePersonalize={togglePersonalize} selectedPersonalize={selectedPersonalize}/>
           ) : (
             ""
           )}
@@ -395,14 +396,14 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                 justifyContent: "center",
               }}
             >
-              <button
+              {currentIndex+1 !== 1 ?  <button
                 className="previous-customization"
                 onClick={handleLeftClick}
               >
                 <div className="mc-prev">
                   <AngleLeftSolid />
                 </div>
-              </button>
+              </button> : ''}
 
               <div className="tray-header-1">
                 <div
@@ -430,12 +431,14 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                   </div>
                 </div>
               </div>
+              {currentIndex+1 !== groups.length ? 
               <button className="next-customization" onClick={handleRightClick}>
                 <div className="mc-prev">
                   <AngleRightSolid />
                 </div>
-              </button>
-            </div>
+              </button> : ''}
+            </div>          
+
             {!isMobile && <Footer />}
 
             {/* Closed on request of Paul */}
@@ -483,61 +486,6 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
             {!selectedTrayPreviewOpenButton && (
               <div style={{ width: "100%" }}>
-                {/* <List> */}
-                {/* {width > 400 &&
-                    attributes &&
-                    !isTrayOpen &&
-                    attributes.map((attribute) => {
-                      return (
-                        <ListItem
-                          key={attribute.id}
-                          onClick={() => selectAttribute(attribute.id)}
-                          selected={selectedAttribute === attribute}
-                        >
-                          {attribute.name}
-                        </ListItem>
-                      );
-                    })} */}
-                {/* Swiper For mobile */}
-                {/* {width <= 400 && attributes && !isTrayOpen && attributes.length > 3 ? (
-                    <Swiper
-                      spaceBetween={80}
-                      slidesPerView={2}
-                      navigation={true}
-                      centeredSlides={true}
-                      modules={[Navigation]}
-                      //onSlideChange={() => console.log('slide change')}
-                      //onSwiper={(swiper) => console.log(swiper)}
-                    >
-                      {attributes.map((attribute) => {
-                        return (
-                          <SwiperSlide>
-                            <ListItem
-                              key={attribute.id}
-                              onClick={() => selectAttribute(attribute.id)}
-                              selected={selectedAttribute === attribute}
-                            >
-                              {attribute.name}
-                            </ListItem>
-                          </SwiperSlide>
-                        );
-                      })}
-                    </Swiper>
-                  ) : 
-                  (attributes && attributes.map((attribute) => {
-                    return (
-                      <ListItem
-                        key={attribute.id}
-                        onClick={() => selectAttribute(attribute.id)}
-                        selected={selectedAttribute === attribute}
-                      >
-                        {attribute.name}
-                      </ListItem>
-                    );
-                  }))                  
-                  } */}
-                {/* </List> */}
-
                 {width > 400 && (
                   <>
                     <div
@@ -600,50 +548,6 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                   </>
                 )}
 
-                {/* {width > 400 && (
-                  <>
-                    <List>
-                      {!selectedTrayPreviewOpenButton &&
-                        selectedAttribute &&
-                        selectedAttribute.code === 'Shelter Colors' &&
-                        selectedAttribute.enabled === true &&
-                        selectedAttribute.options.map((option) => {
-                          if (option.enabled === false) return <></>;
-                          console.log(selectedAttribute);
-
-                          return (
-                            <ListItemColor
-                              key={option.id}
-                              onClick={() => {
-                                selectOption(option.id);
-                                selectOptionId(option.id);
-                                selectOptionName(option.name);
-                              }}
-                              selected={option.selected}
-                              selectedColor={selectedColorName}
-                            >
-                              {option.imageUrl && (
-                                <ListItemImageNoCarousel
-                                  src={option.imageUrl}
-                                  onClick={() => selectColorName(option.name)}
-                                  selected={option.selected}
-                                />
-                              )}
-
-                              <div
-                                style={{ position: "absolute", top: "105%" }}
-                              >
-                                {option.id === selectedOptionId
-                                  ? option.name
-                                  : ""}
-                              </div>
-                            </ListItemColor>
-                          );
-                        })}
-                    </List>
-                  </>
-                )} */}
-
                 <div
                   style={{
                     display: "flex",
@@ -667,7 +571,10 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                         }
                       >
                         {selectedGroup.attributes.map((opts, i) => {
-                          if (opts.options.length <= 9) {
+                         if (opts.code !== 'Seats' && opts.code != 'Shelter' && 
+                         opts.code !=  'Logo' && opts.code !=  'Wheels'
+                         ) {
+                         if (opts.options.length <= 9) {
                             if (opts.enabled) {
                               return (
                                 opts.enabled &&
@@ -706,6 +613,52 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                               );
                             } else return null;
                           }
+                        }
+                        })}
+
+                        {selectedGroup.attributes.map((opts, i) => {
+                         if (opts.code === 'Seats' || opts.code === 'Shelter' || 
+                         opts.code ===  'Logo' || opts.code ===  'Wheels') {
+                          if (opts.options.length <= 9) {
+                            if (opts.enabled) {
+                              return (
+                                opts.enabled &&
+                                opts.options.map((atrOpts) => {
+                                  if (atrOpts.enabled) {
+                                    return (
+                                      <ListItemColorBig
+                                        onClick={() => {
+                                          selectOption(atrOpts.id);
+                                          selectOptionId(atrOpts.id);
+                                          selectOptionName(atrOpts.name);
+                                        }}
+                                        selected={atrOpts.selected}
+                                        selectedColor={selectedColorName}
+                                      >
+                                        {atrOpts.imageUrl && (
+                                          <ListItemImageBig
+                                            src={atrOpts.imageUrl}
+                                          />
+                                        )}
+
+                                        <div
+                                          style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                          }}
+                                        >
+                                          {atrOpts.id === selectedOptionId
+                                            ? atrOpts.name
+                                            : ""}
+                                        </div>
+                                      </ListItemColorBig>
+                                    );
+                                  }
+                                })
+                              );
+                            } else return null;
+                          }
+                        }
                         })}
                       </List>
                     )}
@@ -763,61 +716,6 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                       })}
                   </List>
                 </div>
-
-                {/* <List>
-                  {attributes &&
-                    attributes.map((attribute) => {
-                      if (attribute.enabled === false) return <></>;
-                      return (
-                        <ListItem
-                          key={attribute.id}
-                          onClick={() => selectAttribute(attribute.id)}
-                          selected={selectedAttribute === attribute}
-                        >
-                          {attribute.name}
-                        </ListItem>
-                      );
-                    })}
-                </List> */}
-                {/* <List>
-                  {selectedAttribute &&
-                    selectedAttribute.options.map((option) => {
-                      if (option.enabled === false) return <></>;
-                      return (
-                        <ListItem
-                          key={option.id}
-                          onClick={() => selectOption(option.id)}
-                          selected={option.selected}
-                        >
-                          {option.imageUrl && (
-                            <ListItemImage src={option.imageUrl} />
-                          )}
-                          {option.name}
-                        </ListItem>
-                      );
-                    })}
-                </List> */}
-                {/* set a condition when it is shetter color  */}
-                {/* <List>
-                  {selectedAttribute &&
-                    selectedAttribute.code === "Shelter Colors" &&
-                    selectedAttribute.name != "Select Shelter Colors" &&
-                    selectedAttribute.options.map((option) => {
-                      // if (option.enabled === false) return <></>;
-                      return (
-                        <ListItem
-                          key={option.id}
-                          onClick={() => selectOption(option.id)}
-                          selected={option.selected}
-                        >
-                          {option.imageUrl && (
-                            <ListItemImage src={option.imageUrl} />
-                          )}
-                          {option.name}
-                        </ListItem>
-                      );
-                    })}
-                </List> */}
               </div>
             )}
           </div>

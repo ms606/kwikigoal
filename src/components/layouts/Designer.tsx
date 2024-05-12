@@ -24,6 +24,7 @@ import { ReactComponent as Arrows } from "../../assets/icons/arrows-alt-solid.sv
 import { ReactComponent as Add } from "../../assets/icons/plus-circle-solid.svg";
 import { ReactComponent as SearchMinusSolid } from "../../assets/icons/search-minus-solid.svg";
 import { ReactComponent as SearchPlusSolid } from "../../assets/icons/search-plus-solid.svg";
+import { ReactComponent as CloseIcon } from '../../assets/icons/times-solid.svg';
 import {
   ArrowLeft,
   ArrowLeftIconStyled,
@@ -77,15 +78,17 @@ const MoveElementButton = styled(Button)`
 
 const DesignerContainer = styled.div<{ isMobile?: boolean }>`
   display: flex;
-  flex-flow: column;
+  flex-flow: wrap;
+  justify-content: center;
   user-select: none;
   width: 100%;
-  padding: 30px 30px 70px 30px;
+  padding: 18px 10px 82px;
   background-color: rgb(235, 237, 242);
-  height: 23em;
+  height: 34em;
   overflow-y: auto;
   font-family: Inter, sans-serif;
   border-radius: 23px;
+  overflow-y: auto;
 
   ${(props) =>
     props.isMobile &&
@@ -111,28 +114,23 @@ const UploadButtons = styled.div`
 const Area = styled.div<{ selected?: boolean }>`
   display: flex;
   flex-direction: center;
-  justify-content: space-around;
-  align-items: left;
-  min-height: 47px;
-  min-width: 70px;
-  width: 100%;
-  cursor: pointer;
-  padding: 1px 40px;
-  text-align: center;
-  margin: 0;
-  margin-bottom: 18px;
-  color: black;
   
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 0px;
-  word-spacing: 1px;
-
-  border: 1px solid #297CA3;
-  font-size: 15px;
-  border-radius: 4px;
-  background-color: white;
-  color: #297CA3;
+    justify-content: space-around;
+    // s// min-width: 51px;
+    /* width: 100%; */
+    cursor: pointer;
+    padding: 1px 8px;
+    text-align: center;
+    margin: 0px 0px 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    word-spacing: 1px;
+    border: 1px solid rgb(41, 124, 163);
+    font-size: 12px;
+    border-radius: 4px;
+    background-color: white;
+    color: rgb(41, 124, 163);
 
 
   &:hover {
@@ -193,7 +191,8 @@ const CopyrightMandatoryMessage = styled.div``;
 const Designer: FC<{
   onCloseClick?: () => void;
   togglePersonalize?: () => void;
-}> = ({ onCloseClick, togglePersonalize }) => {
+  selectedPersonalize?: () => void;
+}> = ({ onCloseClick, togglePersonalize, selectedPersonalize }) => {
   const { showDialog, closeDialog } = useDialogManager();
   const [forceUpdate, setForceUpdate] = useState(false);
   const { setIsLoading, isMobile } = useStore();
@@ -549,7 +548,13 @@ const Designer: FC<{
 
   return (
     <>
+      
+<div  onClick={togglePersonalize} style={{display: 'flex', justifyContent: 'end'}}> Close 
+      <Icon> <CloseIcon /></Icon>
+      </div> 
       {!moveElements && (
+
+        
         <DesignerContainer isMobile={isMobile}>
           {/* Templates */}
           {!isMobile && templates.length > 1 && (
@@ -569,7 +574,7 @@ const Designer: FC<{
           )}
 
           {/* Areas */}
-          {!isMobile && finalVisibleAreas.length > 1 && (
+          {/* {!isMobile && finalVisibleAreas.length > 1 && (
             <CarouselContainer
               slidesToScroll={1}
               speed={50}
@@ -621,7 +626,20 @@ const Designer: FC<{
                 </Area>
               ))}
             </CarouselContainer>
-          )}
+          )} */}
+
+      
+            <div style={{display: 'flex', flexDirection: 'row', width: '100%', height: '74px', flexFlow: 'wrap'}}>
+              {finalVisibleAreas.map((area) => (
+                <Area
+                  key={area.id}
+                  selected={actualAreaId === area.id}
+                  onClick={() => setActualAreaId(area.id)}
+                >
+                  {area.name}
+                </Area>
+              ))}
+            </div>
 
           {isMobile && translatedTemplates.length > 1 && (
             <SelectContainer>
