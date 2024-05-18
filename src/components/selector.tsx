@@ -141,7 +141,6 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   }
 
   const hasEnabled = groups[3]?.attributes.some(attribute => attribute.enabled);
-  console.log(hasEnabled,'hasEnabled');
   
   if (!hasEnabled) {
     groups.splice(3, 1);
