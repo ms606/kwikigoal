@@ -1,6 +1,6 @@
 import { useZakeke } from 'zakeke-configurator-react';
 import { T } from '../../Helpers';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
 // import { ReactComponent as CheckSolid } from '../../assets/icons/check-circle-solid_1.svg';
 // import { Icon } from 'components/Atomic';
@@ -53,18 +53,41 @@ const LoaderFill = styled.div`
   border-radius: 'inherit';
 `;
 
+const VideoPlayer = styled.video`
+  max-width: 100%;
+  max-height: 100%;
+`;
+
 const ProgressBar = ({ bgColor, completed }) => {
   const { isSceneLoading, publicTranslations } = useZakeke();
   const dynamicVals = publicTranslations?.dynamics;
+
+  const videoRef = useRef(null);
+
+  useEffect (() => {
+    const video = videoRef.current;
+    video.muted = true;
+    video.play();
+
+  })
+
   return (
     <div>
+
+  <VideoPlayer ref={videoRef} id="myVideo" controls aut>
+          <source src="intro_video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </VideoPlayer>
+        
       <LoadingLabel>
+      
         {/* {console.log(T.d('Loading..'),'esfdfsfdssfds');} */}
         {dynamicVals?.get('Loading...')}
        
         {/* {isSceneLoading ? T._('Loading your product...', 'Composer') : T._('Loading complete.', 'Composer')} */}
       </LoadingLabel>
       <LoaderContainer>
+
         <LoaderFill completed={isSceneLoading ? completed : 100} bgColor={bgColor} isCompleted={!isSceneLoading} />
         <LoadingPercentageandIconContainer>
           <LoadingPercentageLabel>

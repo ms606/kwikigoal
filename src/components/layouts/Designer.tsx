@@ -192,7 +192,9 @@ const Designer: FC<{
   onCloseClick?: () => void;
   togglePersonalize?: () => void;
   selectedPersonalize?: () => void;
-}> = ({ onCloseClick, togglePersonalize, selectedPersonalize }) => {
+  updateSelectedFilter?: any;
+  selectedFilteredAreas?: any;
+}> = ({ onCloseClick, togglePersonalize, selectedPersonalize, updateSelectedFilter, selectedFilteredAreas }) => {
   const { showDialog, closeDialog } = useDialogManager();
   const [forceUpdate, setForceUpdate] = useState(false);
   const { setIsLoading, isMobile } = useStore();
@@ -282,6 +284,7 @@ const Designer: FC<{
       ? finalVisibleAreas[0].id
       : 0
   );
+  
 
   let currentTemplateArea = currentTemplate!.areas.find(
     (x) => x.id === actualAreaId
@@ -336,6 +339,15 @@ const Designer: FC<{
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finalVisibleAreas]);
+
+
+  useEffect(() => {
+    if(selectedFilteredAreas > 0)
+  {
+    setActualAreaId(selectedFilteredAreas)
+  }
+  },[selectedFilteredAreas])
+  
 
   function getSupportedUploadFileFormats(templateId: number, areaId: number) {
     const restrictions = getTemplateUploadRestrictictions(templateId, areaId);
@@ -634,7 +646,11 @@ const Designer: FC<{
                 <Area
                   key={area.id}
                   selected={actualAreaId === area.id}
-                  onClick={() => setActualAreaId(area.id)}
+                  onClick={() => {setActualAreaId(area.id);
+                    if(area) {
+                      updateSelectedFilter(area.id)
+                    }   
+                  }}
                 >
                   {area.name}
                 </Area>

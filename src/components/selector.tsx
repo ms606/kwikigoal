@@ -73,7 +73,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     items,
   } = useZakeke();
 
-  console.log(groups, "groups");
+  // console.log(groups, "groups");
 
   const { setIsLoading, isMobile } = useStore();
 
@@ -116,6 +116,15 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     false
   );
 
+
+  const [selectedFilteredAreas, setSelectedFilteredAreas] = useState<number>(0);
+
+
+  const updateSelectedFilter = (id:number) => {
+    setSelectedFilteredAreas(id)
+  }
+
+  
   // Attributes can be in both groups and steps, so show the attributes of step or in a group based on selection
   const attributes = useMemo(
     () => (selectedStep || selectedGroup)?.attributes ?? [],
@@ -130,6 +139,14 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   if (indexToRemove !== -1) {
     groups.splice(indexToRemove, 1);
   }
+
+  const hasEnabled = groups[3]?.attributes.some(attribute => attribute.enabled);
+  console.log(hasEnabled,'hasEnabled');
+  
+  if (!hasEnabled) {
+    groups.splice(3, 1);
+  }
+
 
   // console.log(selectedGroup, selectedAttribute, "selectedAttribute");
 
@@ -362,7 +379,8 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
             </span>
           </div>
           {selectedPersonalize ? (
-            <Designer togglePersonalize={togglePersonalize} selectedPersonalize={selectedPersonalize}/>
+            <Designer togglePersonalize={togglePersonalize} selectedPersonalize={selectedPersonalize} 
+                      updateSelectedFilter={updateSelectedFilter} selectedFilteredAreas={selectedFilteredAreas}/>
           ) : (
             ""
           )}
