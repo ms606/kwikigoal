@@ -1,28 +1,30 @@
-import { useZakeke } from 'zakeke-configurator-react';
-import { T } from '../../Helpers';
-import React, { FC, useEffect, useRef } from 'react';
-import styled from 'styled-components/macro';
+import { useZakeke } from "zakeke-configurator-react";
+import { T } from "../../Helpers";
+import React, { FC, useEffect, useRef } from "react";
+import styled from "styled-components/macro";
 // import { ReactComponent as CheckSolid } from '../../assets/icons/check-circle-solid_1.svg';
 // import { Icon } from 'components/Atomic';
 
 const LoadingLabel = styled.div`
   color: #000;
   font-size: 12px;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   line-height: 16px;
 `;
 
 const LoaderContainer = styled.div`
-  height: 8px;
-  width: 600px;
+  height: 10px;
+  // width: 600px;
+  width: 76vw;
+  // height: 80vh;
   border-radius: 4px;
   background-color: #dbe2e6;
 
-  @media screen and (max-width: 766px){
+  @media screen and (max-width: 766px) {
     width: 310px;
-   }
+  }
 `;
 
 const LoadingPercentageLabel = styled.span`
@@ -31,7 +33,7 @@ const LoadingPercentageLabel = styled.span`
   font-size: 12px;
   line-height: 16px;
   font-style: normal;
-  font-family: 'Inter';
+  font-family: "Inter";
 `;
 
 const LoadingPercentageandIconContainer = styled.div`
@@ -50,12 +52,12 @@ const LoaderFill = styled.div`
   margin: 7px 0px;
   width: ${({ completed }) => completed && `${completed}%`};
   background-color: #008556;
-  border-radius: 'inherit';
+  border-radius: "inherit";
 `;
 
 const VideoPlayer = styled.video`
-  max-width: 100%;
-  max-height: 100%;
+    width: 76.5vw;
+    height: 67vh;
 `;
 
 const ProgressBar = ({ bgColor, completed }) => {
@@ -64,37 +66,60 @@ const ProgressBar = ({ bgColor, completed }) => {
 
   const videoRef = useRef(null);
 
-  useEffect (() => {
+
+  useEffect(() => {
     const video = videoRef.current;
-    video.muted = true;
+    video.muted = true; // Mute the video to allow autoplay
     video.play();
 
-  })
+    const handleVideoEnd = () => {
+      console.log("Video has played completely at least once.");
+    };
+
+    const handleMetadataLoaded = () => {
+      console.log(`Video duration: ${video.duration} seconds`);
+    };
+
+    video.addEventListener('ended', handleVideoEnd);
+
+    // Unmute the video after it starts playing (optional)
+    video.addEventListener('playing', () => {
+      video.muted = true;
+    });
+
+    return () => {
+      video.removeEventListener('ended', handleVideoEnd);
+      video.removeEventListener('loadedmetadata', handleMetadataLoaded);
+    };
+  }, []);
+
+
 
   return (
     <div>
+      <VideoPlayer ref={videoRef} id="myVideo" controls aut>
+        <source src="intro_video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </VideoPlayer>
 
-  <VideoPlayer ref={videoRef} id="myVideo" controls aut>
-          <source src="intro_video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </VideoPlayer>
-        
       <LoadingLabel>
-      
         {/* {console.log(T.d('Loading..'),'esfdfsfdssfds');} */}
-        {dynamicVals?.get('Loading...')}
-       
+        {dynamicVals?.get("Loading...")}
+
         {/* {isSceneLoading ? T._('Loading your product...', 'Composer') : T._('Loading complete.', 'Composer')} */}
       </LoadingLabel>
       <LoaderContainer>
-
-        <LoaderFill completed={isSceneLoading ? completed : 100} bgColor={bgColor} isCompleted={!isSceneLoading} />
+        <LoaderFill
+          completed={isSceneLoading ? completed : 100}
+          bgColor={bgColor}
+          isCompleted={!isSceneLoading}
+        />
         <LoadingPercentageandIconContainer>
           <LoadingPercentageLabel>
-            {isSceneLoading ? `${completed}%` : '100%'}
+            {isSceneLoading ? `${completed}%` : "100%"}
             {/* {isSceneLoading ? T._('In progress | ', 'Composer') + `${completed}%` : '100%'} */}
           </LoadingPercentageLabel>
-        {/* // {!isSceneLoading && (
+          {/* // {!isSceneLoading && (
             // <CheckIcon>
             //   <CheckSolid />
             // </CheckIcon>

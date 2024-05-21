@@ -25,12 +25,17 @@ import useStore from "../Store";
 import { T } from "../Helpers";
 import Footer from "./layouts/Footer";
 import FooterMobile from "./layouts/FooterMobile";
+import Pagination from "swiper";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import  { Navigation }  from 'swiper/modules';
+
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import 'swiper/swiper-bundle.css';
 import { ReactComponent as AngleLeftSolid } from "../assets/icons/angle-left-solid.svg";
 import { ReactComponent as AngleRightSolid } from "../assets/icons/angle-right-solid.svg";
 import Loader from "./Loader";
@@ -73,6 +78,8 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     items,
   } = useZakeke();
 
+ 
+  
   // console.log(groups, "groups");
 
   const { setIsLoading, isMobile } = useStore();
@@ -688,15 +695,19 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                         if (i > 0 && opts.enabled && opts.options.length > 9) {
                           return (
                             <Swiper
-                              spaceBetween={6}
-                              slidesPerView={2}
-                              navigation={true}
-                              // watchOverflow={true}
-                              // centeredSlides={true}
-                              // modules={[Navigation]}
+                              // spaceBetween={0}
+                              slidesPerView={12}                              
+                              pagination={{ clickable: true }}
+                              navigation = {{
+                                nextEl: '.swiper-button-next',
+                                prevEl: '.swiper-button-prev',
+                              }}
+                              modules={[Navigation]}
+                              
                               //onSlideChange={() => console.log('slide change')}
                               //onSwiper={(swiper) => console.log(swiper)}
                             >
+                             <div className="swiper-button-prev"></div> 
                               {opts.enabled &&
                                 opts.options.map((atrOpts) => (
                                   <SwiperSlide key={atrOpts.id}>
@@ -727,7 +738,10 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                                     </ListItemColor>
                                   </SwiperSlide>
                                 ))}
+                               
+                               <div className="swiper-button-next"></div> 
                             </Swiper>
+                            
                           );
                         } else return null;
                       })}

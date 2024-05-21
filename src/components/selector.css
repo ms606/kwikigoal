@@ -302,6 +302,9 @@ left: -17px !important
  line-height: 3 !important;
 }
 
+.swiper-button-disabled {
+  opacity: 1 !important;
+}
 
 @media screen and (min-width: 768px) {
   .button-53 {

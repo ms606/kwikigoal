@@ -24,7 +24,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.7.4",
     "styled-components": "^5.3.10",
-    "swiper": "^10.2.0",
+    "swiper": "^11.1.3",
     "typescript": "^5.0.4",
     "zakeke-configurator-react": "0.0.160",
     "zustand": "^4.3.9"
