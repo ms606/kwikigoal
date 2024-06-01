@@ -152,7 +152,9 @@ export const ZakekeDesignerContainer = styled.div<{ isMobile?: boolean }>`
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background: #ffffff;
+	background: rgb(235, 237, 242);
+	// #ffffff;
+	
 	${(props) =>
 		props.isMobile &&
 		`

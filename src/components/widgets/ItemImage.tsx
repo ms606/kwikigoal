@@ -44,7 +44,7 @@ interface ImageItem {
 
 const ImageAndButtonsContainer = styled.div`
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 7fr 1fr;
     grid-column-gap: 20px;
     input{
     display:none;

@@ -386,7 +386,7 @@ const FooterMobile = () => {
 								<span style={{color: 'white'}}>
 									{isDraftEditor || isEditorMode
 										? T._('Save', 'Composer')
-										: T._('Add to cart', 'Composer')}
+										: T._('Get a quote', 'Composer')}
 								</span>
 							</AddToCartButton>
 

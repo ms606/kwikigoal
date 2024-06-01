@@ -368,7 +368,7 @@ const Footer = () => {
 									<span>
 										{isDraftEditor || isEditorMode
 											? T._('Save', 'Composer')
-											: T._('Add to cart', 'Composer')}
+											: T._('Get a quote', 'Composer')}
 									</span>
 								)}
 								{!isAddToCartLoading && isOutOfStock && <span>{T._('OUT OF STOCK', 'Composer')}</span>}

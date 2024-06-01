@@ -2,7 +2,8 @@ import { debounce } from "lodash";
 import  React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import styled from "styled-components";
-// import useDropdown from "../../../hooks/useDropdown";
+import useDropdown from "../../hooks/useDropdown";
+
 
 const ColorPickerContainer = styled.div`
     display: flex;
@@ -263,19 +264,19 @@ const ColorContainer = styled.div<{ color: string }>`
 `;
 
 const ColorPicker: FC<ColorPickerProps> = ({ color, onChange }) => {
-    //const [open, , isOpened, Dropdown] = useDropdown();
+    const [open, , isOpened, Dropdown] = useDropdown();
     const ref = useRef<HTMLDivElement>(null);
 
     return <>
         <ColorContainer
             ref={ref}
             color={color}
-            // onClick={() => open(ref.current!, 'bottom', 'right')}
+            onClick={() => open(ref.current!, 'bottom', 'right')}
         />
 
-        {/* {isOpened && <Dropdown>
+        {isOpened && <Dropdown>
             <ColorPickerDropdown color={color} onChange={onChange} />
-        </Dropdown>} */}
+        </Dropdown>}
     </>;
 }
 

@@ -336,7 +336,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
       <div className="top-nav">
         <div className="body-3" id="product-info">
           <span>{productName}</span>
-          <span>USD {price}</span>
+          {/* <span>USD {price}</span> */}
         </div>
       </div>
 
@@ -381,7 +381,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                 padding: "7px",
               }}
             >
-              {"Personalize"}
+              {"Customize"}
             </span>
           </div>
           {selectedPersonalize ? (

@@ -35,7 +35,7 @@ const QuantityDialog: FC<{ quantityRule: ProductQuantityRule; onClick?: () => vo
 				/>
 			</QuantityContainer>
 			<DialogFooterButton isFullWidth onClick={onClick}>
-			 {staticsVals?.get('Add to cart')} 
+			 {staticsVals?.get('Get a quote')} 
 			</DialogFooterButton>
 		</Dialog>
 	);
