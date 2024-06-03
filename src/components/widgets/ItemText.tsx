@@ -210,14 +210,14 @@ const ItemText: FC<{ item: EditTextItem, handleItemPropChange: PropChangeHandler
 
             {(!disableTextColors || !(disableTextColors && textColors.length === 1)) && <FormControl label="Color">
                 <ColorsContainer>
-                    {/* {!disableTextColors && <ColorPickerContainer>
+                    {!disableTextColors && <ColorPickerContainer>
                         <ColorPicker
                             color={fillColor}
                             onChange={color => {
                                 handleFillColorChange(color);
                                 setFillColor(color);
                             }} />
-                    </ColorPickerContainer>} */}
+                    </ColorPickerContainer>}
 
                     {!disableTextColors && <TextColorsContainer isDefaultPalette>
                         {(defaultColorsPalette).map(hex => <SinglePaletteItem
