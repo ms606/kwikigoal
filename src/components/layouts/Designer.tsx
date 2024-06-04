@@ -233,8 +233,6 @@ const Designer: FC<{
 
   const filteredAreas =
     product?.areas.filter((area) => isAreaVisible(area.id)) ?? [];
-
-    //console.log(product, 'fa', isAreaVisible);
     
   let finalVisibleAreas: ProductArea[] = [];
 

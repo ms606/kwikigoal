@@ -168,7 +168,6 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
-      //   setHeight(window.innerHeight);
     };
 
     //window.addEventListener('resize', handleResize);
