@@ -53,6 +53,16 @@ const dialogsPortal = document.getElementById("dialogs-portal")!;
 //       `}
 // `;
 
+const validCodes:any = ['Seats','Shelter','Logo','Wheels',"Without Wheel Seats 9ft","With Wheel Seats 9ft",
+"Without Wheel Seats 12ft","With Wheel Seats 12ft",
+"Without Wheel Seats 15ft","With Wheel Seats 15ft",
+"Without Wheel Seats 18ft","With Wheel Seats 18ft",
+"Without Wheel Seats 21ft","With Wheel Seats 21ft",
+"Without Wheel Seats 24ft","With Wheel Seats 24ft",
+"Without Wheel Seats 30ft","With Wheel Seats 30ft",
+
+];
+
 interface TrayPreviewOpenButton3DProps {
   trayPreviewOpenButton3DFunc: (data: any) => void;
 }
@@ -78,10 +88,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     items,
   } = useZakeke();
 
- 
   
-  // console.log(groups, "groups");
-
   const { setIsLoading, isMobile } = useStore();
 
   // Keep saved the ID and not the refereces, they will change on each update
@@ -147,12 +154,13 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     groups.splice(indexToRemove, 1);
   }
 
-  const hasEnabled = groups[3]?.attributes.some(attribute => attribute.enabled);
+  const hasEnabled = groups[5]?.attributes.some(attribute => attribute.enabled);
   
   if (!hasEnabled) {
-    groups.splice(3, 1);
+    groups.splice(5, 1);
   }
 
+console.log(groups);
 
   // console.log(selectedGroup, selectedAttribute, "selectedAttribute");
 
@@ -594,9 +602,11 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                         }
                       >
                         {selectedGroup.attributes.map((opts, i) => {
-                         if (opts.code !== 'Seats' && opts.code != 'Shelter' && 
-                         opts.code !=  'Logo' && opts.code !=  'Wheels'
-                         ) {
+                        //  if (opts.code !== 'Seats' && opts.code != 'Shelter' && 
+                        //  opts.code !=  'Logo' && opts.code !=  'Wheels'
+                        //  ) 
+                        if (!validCodes.includes(opts.code))
+                         {
                          if (opts.options.length <= 9) {
                             if (opts.enabled) {
                               return (
@@ -640,8 +650,9 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                         })}
 
                         {selectedGroup.attributes.map((opts, i) => {
-                         if (opts.code === 'Seats' || opts.code === 'Shelter' || 
-                         opts.code ===  'Logo' || opts.code ===  'Wheels') {
+                        //  if (opts.code === 'Seats' || opts.code === 'Shelter' || 
+                        //  opts.code ===  'Logo' || opts.code ===  'Wheels') {
+                         if (validCodes.includes(opts.code)) { 
                           if (opts.options.length <= 9) {
                             if (opts.enabled) {
                               return (
