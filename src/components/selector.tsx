@@ -130,6 +130,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     false
   );
 
+  const [isNextDisabled, setIsNextDisabled] = useState<any | null>(false)
 
   const [selectedFilteredAreas, setSelectedFilteredAreas] = useState<number>(0);
 
@@ -159,10 +160,6 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   if (!hasEnabled) {
     groups.splice(5, 1);
   }
-
-console.log(groups);
-
-  // console.log(selectedGroup, selectedAttribute, "selectedAttribute");
 
   useEffect(() => {
     const itemAvailable = items?.filter((item) => item.type === 0).length > 0;
@@ -713,6 +710,8 @@ console.log(groups);
                                 prevEl: '.swiper-button-prev',
                               }}
                               modules={[Navigation]}
+                              onReachEnd={() => console.log('end')}
+                              
                               
                               //onSlideChange={() => console.log('slide change')}
                               //onSwiper={(swiper) => console.log(swiper)}
