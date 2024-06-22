@@ -255,6 +255,8 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
   if (isAssetsLoading || !groups || groups.length === 0) return <Loader />;
 
+  console.log(groups[1],groups);
+  
   // groups
   // -- attributes
   // -- -- options
@@ -692,6 +694,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                         }
                         })}
                       </List>
+                      
                     )}
 
                   <List>
@@ -699,22 +702,19 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                       selectedGroup.attributes &&
                       selectedGroup.attributes.map((opts, i) => {
                         if (opts.enabled === false) return <></>;
-                        if (i > 0 && opts.enabled && opts.options.length > 9) {
+                        if (i > 0 && opts.enabled && opts.options.length >= 17) {
                           return (
                             <Swiper
                               // spaceBetween={0}
-                              slidesPerView={12}                              
+                              slidesPerView={12} 
+                              slidesPerGroup={1}                              
                               pagination={{ clickable: true }}
                               navigation = {{
                                 nextEl: '.swiper-button-next',
                                 prevEl: '.swiper-button-prev',
                               }}
                               modules={[Navigation]}
-                              onReachEnd={() => console.log('end')}
-                              
-                              
-                              //onSlideChange={() => console.log('slide change')}
-                              //onSwiper={(swiper) => console.log(swiper)}
+                              onReachEnd={() => setIsNextDisabled(true)}
                             >
                              <div className="swiper-button-prev"></div> 
                               {opts.enabled &&
@@ -748,13 +748,58 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                                   </SwiperSlide>
                                 ))}
                                
-                               <div className="swiper-button-next"></div> 
+                               <div className={`swiper-button-next ${isNextDisabled ? 'swiper-button-disabled' : ''}`}></div> 
                             </Swiper>
                             
                           );
-                        } else return null;
+                        } 
                       })}
                   </List>
+
+                  
+                  <div>
+                  <List>
+                    {selectedGroup &&
+                      selectedGroup.attributes &&
+                      // selectedGroup.attributes?.name =! 'Shelter Colors' &&
+                      selectedGroup.attributes.map((opts, i) => {
+                        if (opts.enabled === false) return <></>;
+                        if (i > 0 && (opts.name != 'White' && opts.name != 'Black' && opts.name != 'Molded Seats Colors' && opts.name != 'Seats' ) && opts.enabled && opts.options.length <= 16) {
+                          if (!validCodes.includes(opts.code)) { 
+                          return opts.options.map((atrOpts) => (
+                            <ListItemColor
+                              key={atrOpts.id} // Always include a unique key when rendering lists
+                              onClick={() => {
+                                selectOption(atrOpts.id);
+                                selectOptionId(atrOpts.id);
+                                selectOptionName(atrOpts.name);
+                              }}
+                              selected={atrOpts.selected}
+                              selectedColor={selectedColorName}
+                            >
+                              {atrOpts.imageUrl && (
+                                <ListItemImage src={atrOpts.imageUrl} />
+                              )}
+
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  top: "80%",
+                                }}
+                              >
+                                {atrOpts.id === selectedOptionId ? atrOpts.name : ""}
+                              </div>
+                            </ListItemColor>
+                          ));
+                              }
+                        } else {
+                          // Ensure map always returns something, even if it's null
+                          return null;
+                        }
+                      })}
+                  </List>
+                </div>
+                  
                 </div>
               </div>
             )}
