@@ -208,7 +208,9 @@ const ItemText: FC<{ item: EditTextItem, handleItemPropChange: PropChangeHandler
                 </TextButtonsContainer>
             </TextToolsContainer>
 
-            {(!disableTextColors || !(disableTextColors && textColors.length === 1)) && <FormControl label="Color">
+            {(!disableTextColors || !(disableTextColors && textColors.length === 1)) && 
+            !!item.constraints?.canChangeFontColor && (
+            <FormControl label="Color">
                 <ColorsContainer>
                     {!disableTextColors && <ColorPickerContainer>
                         <ColorPicker
@@ -243,7 +245,9 @@ const ItemText: FC<{ item: EditTextItem, handleItemPropChange: PropChangeHandler
                         />)}
                     </TextColorsContainer>}
                 </ColorsContainer>
-            </FormControl>}
+            </FormControl>
+            )}
+
         </ItemTextContainer >
     else
         return null;

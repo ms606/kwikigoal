@@ -405,12 +405,12 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
         <div style={containerStyles}>
           {/* {groups[currentIndex].name === "MODALITATE IMPRIMARE" && (!hasTypeZero) ? null : ( */}
           <div className="tray-header">
-            <TrayPreviewOpenButton
+            {/* <TrayPreviewOpenButton
               width={width}
               trayPreviewOpenButton={trayPreviewOpenButton}
               selectedTrayPreviewOpenButton={selectedTrayPreviewOpenButton}
               selectTrayPreviewOpenButton={selectTrayPreviewOpenButton}
-            />
+            /> */}
 
             <div
               style={{

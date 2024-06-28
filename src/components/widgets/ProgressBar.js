@@ -74,6 +74,7 @@ const ProgressBar = ({ bgColor, completed }) => {
 
     const handleVideoEnd = () => {
       console.log("Video has played completely at least once.");
+      video.play()
     };
 
     const handleMetadataLoaded = () => {

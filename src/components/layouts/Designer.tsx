@@ -77,7 +77,7 @@ const MoveElementButton = styled(Button)`
 `;
 
 const DesignerContainer = styled.div<{ isMobile?: boolean }>`
-  display: flex;
+  // display: flex;
   flex-flow: wrap;
   justify-content: center;
   user-select: none;

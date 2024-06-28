@@ -37,6 +37,7 @@
 
   .tray-header {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
     font-family: "Helvetica Now Text";
     height: 40px;
@@ -119,7 +120,8 @@
   }
   s
   .tray-preview-open-button {
-    display: flex;
+    display: none;
+    /* display: flex; */
     align-items: center;
     justify-content: center;
     padding: 0px;
