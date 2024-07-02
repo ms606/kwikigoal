@@ -155,10 +155,10 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     groups.splice(indexToRemove, 1);
   }
 
-  const hasEnabled = groups[5]?.attributes.some(attribute => attribute.enabled);
+  const hasEnabled = groups[4]?.attributes.some(attribute => attribute.enabled);
   
   if (!hasEnabled) {
-    groups.splice(5, 1);
+    groups.splice(4, 1);
   }
 
   useEffect(() => {
@@ -706,7 +706,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                           return (
                             <Swiper
                               // spaceBetween={0}
-                              slidesPerView={12} 
+                              slidesPerView={12} //20
                               slidesPerGroup={1}                              
                               pagination={{ clickable: true }}
                               navigation = {{
