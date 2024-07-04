@@ -706,7 +706,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                           return (
                             <Swiper
                               // spaceBetween={0}
-                              slidesPerView={12} //20
+                              slidesPerView={20} //20
                               slidesPerGroup={1}                              
                               pagination={{ clickable: true }}
                               navigation = {{
