@@ -1,15 +1,16 @@
    :root {
     --colorBtnPrimary: #297ca3;
-    --podium-cds-typography-body1-strong: 500 1rem/1.5 'Inter';
-    --podium-cds-typography-body2: 400 .875rem/1.5 'Inter';
-    --podium-cds-typography-body3: 800 1.4rem/1.5 'Inter';
-    --podium-cds-typography-body3-small: 100 1rem/3.5 'Inter';
+    --podium-cds-typography-body1-strong: 500 1rem/1.5 Roboto;
+    --podium-cds-typography-body2: 400 .875rem/1.5 Roboto;
+    --podium-cds-typography-body3: 800 1.4rem/1.5 Roboto;
+    --podium-cds-typography-body3-small: 100 1rem/3.5 Roboto;
+    --general-font: 'Roboto';
   }
 
   body {
     font-size: inherit;
     line-height: inherit;
-    font-family: 'Inter';
+    font-family: 'Roboto';
     color: var(--podium-cds-color-black);
     background-color: var(--podium-cds-color-white)
   }
@@ -39,7 +40,7 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    font-family: "Helvetica Now Text";
+    font-family: var(--general-font);
     height: 40px;
     position: absolute;
     width: 100%;
