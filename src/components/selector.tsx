@@ -431,7 +431,8 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                 onClick={handleLeftClick}
               >
                 <div className="mc-prev">
-                  <AngleLeftSolid />
+                  Back
+                  {/* <AngleLeftSolid /> */}
                 </div>
               </button> : ''}
 
@@ -464,7 +465,8 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
               {currentIndex+1 !== groups.length ? 
               <button className="next-customization" onClick={handleRightClick}>
                 <div className="mc-prev">
-                  <AngleRightSolid />
+                  Next
+                  {/* <AngleRightSolid /> */}
                 </div>
               </button> : ''}
             </div>          
@@ -523,7 +525,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        fontFamily: "cursive",
+                        fontFamily: "roboto",
                         textDecoration: "underline",
                       }}
                     >
@@ -583,7 +585,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontFamily: "cursive",
+                    fontFamily: "roboto",
                     textDecoration: "underline",
                   }}
                 >

@@ -26,7 +26,7 @@ export const List = styled.ul<{isShelterColor?: boolean}>`
 export const ListItem = styled.li<{ selected?: boolean }>`
     display: flex;
     flex-direction: column;    
-    font: 500 1.1rem/1.5 'Inter';
+    font: 500 1.1rem/1.5 'Roboto';
     align-items: center;
     text-align: center;
     justify-content: center;
@@ -47,7 +47,7 @@ export const ListItem = styled.li<{ selected?: boolean }>`
         background-color: #ffd966;
     }
     @media screen and (max-width: 568px) {
-      font: 500 .8rem/1.8 'Inter';
+      font: 500 .8rem/1.8 'Roboto';
       margin: 0 7px;
       padding: 0px 7px;
       width: 132px;
@@ -59,7 +59,7 @@ export const ListItem = styled.li<{ selected?: boolean }>`
 export const ListItemBig = styled.li<{ selected?: boolean }>`
     display: flex;
     flex-direction: column;    
-    font: 500 1.1rem/1.5 'Inter';
+    font: 500 1.1rem/1.5 'Roboto';
     align-items: center;
     text-align: center;
     justify-content: center;
@@ -80,7 +80,7 @@ export const ListItemBig = styled.li<{ selected?: boolean }>`
         background-color: #ffd966;
     }
     @media screen and (max-width: 568px) {
-      font: 500 .8rem/1.8 'Inter';
+      font: 500 .8rem/1.8 'Roboto';
       margin: 0 7px;
       padding: 0px 7px;
       width: 132px;
