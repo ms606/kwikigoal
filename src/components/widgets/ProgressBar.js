@@ -8,7 +8,7 @@ import styled from "styled-components/macro";
 const LoadingLabel = styled.div`
   color: #000;
   font-size: 12px;
-  font-family: "Inter";
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   line-height: 16px;
@@ -33,7 +33,7 @@ const LoadingPercentageLabel = styled.span`
   font-size: 12px;
   line-height: 16px;
   font-style: normal;
-  font-family: "Inter";
+  font-family: "Roboto";
 `;
 
 const LoadingPercentageandIconContainer = styled.div`
