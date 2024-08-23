@@ -62,7 +62,7 @@
     padding: 0px 20px;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 18px;
   }
 
@@ -370,7 +370,7 @@ left: -17px !important
   
   .active-marketing-component-name {
     padding: 0px 15px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 88%;
   }
 

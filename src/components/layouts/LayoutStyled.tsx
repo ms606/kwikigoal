@@ -444,7 +444,7 @@ export const TopRightIcons = styled.div`
 export const ViewerContainer = styled.div`
 	position: relative;
 	min-height: 0;
-	font-family: 'Inter', sans-serif;
+	font-family: 'Roboto', sans-serif;
 
 	@media (max-width: 1024px) {
 		height: 100%;

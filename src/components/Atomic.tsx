@@ -37,7 +37,7 @@ export const TextArea = styled.textarea`
 	border: 1px black solid;
 	width: 100%;
 	min-height: 100px;
-	font-family: Inter, sans-serif;
+	font-family: Robot, sans-serif;
 	outline: none;
 	resize: none;
 	placeholder: 'Input your text here';
@@ -223,7 +223,7 @@ export const AddToCartButton = styled(Button)`
 	right: 10%;
 	min-width: 280px;
 	background-color: #297ca3;
-	font-family: 'Inter';
+	font-family: 'Roboto';
 	font-size: 18px;
 `;
 
