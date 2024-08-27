@@ -455,10 +455,10 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                     >
                       {groups[currentIndex]?.name}
                     </span>
-                    <span className="active-marketing-component-index">
+                    {/* <span className="active-marketing-component-index">
                       {" "}
                       {currentIndex + 1} / {groups.length}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>

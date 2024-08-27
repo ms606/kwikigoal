@@ -14,8 +14,8 @@ const QuantityDialogWindow = styled(DialogWindow)`
 `;
 
 const QuantityDialog: FC<{ quantityRule: ProductQuantityRule; onClick?: () => void }> = ({ quantityRule, onClick }) => {
-	const { quantity, setQuantity, publicTranslations } = useZakeke();
-	const staticsVals = publicTranslations?.statics; 
+	const { quantity, setQuantity, translations } = useZakeke();
+	const staticsVals = translations?.statics; 
 
 	return (
 		<Dialog windowDecorator={QuantityDialogWindow} alignButtons={'center'}>

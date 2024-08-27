@@ -61,8 +61,8 @@ const VideoPlayer = styled.video`
 `;
 
 const ProgressBar = ({ bgColor, completed }) => {
-  const { isSceneLoading, publicTranslations } = useZakeke();
-  const dynamicVals = publicTranslations?.dynamics;
+  const { isSceneLoading, translations } = useZakeke();
+  const dynamicVals = translations?.dynamics;
 
   const videoRef = useRef(null);
 
