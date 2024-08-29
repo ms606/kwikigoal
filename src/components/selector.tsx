@@ -430,9 +430,9 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                 className="previous-customization"
                 onClick={handleLeftClick}
               >
-                <div className="mc-prev">
+                <div className="mc-prev">                 
+                  <AngleLeftSolid />
                   Back
-                  {/* <AngleLeftSolid /> */}
                 </div>
               </button> : ''}
 
@@ -466,7 +466,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
               <button className="next-customization" onClick={handleRightClick}>
                 <div className="mc-prev">
                   Next
-                  {/* <AngleRightSolid /> */}
+                  <AngleRightSolid />
                 </div>
               </button> : ''}
             </div>          
@@ -786,7 +786,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                               <div
                                 style={{
                                   position: "absolute",
-                                  top: "80%",
+                                  top: "96%",
                                 }}
                               >
                                 {atrOpts.id === selectedOptionId ? atrOpts.name : ""}
