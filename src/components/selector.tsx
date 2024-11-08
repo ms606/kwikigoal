@@ -28,8 +28,8 @@ import FooterMobile from "./layouts/FooterMobile";
 import Pagination from "swiper";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import  { Navigation }  from 'swiper/modules';
-
+import { Navigation } from 'swiper/modules';
+import { Tooltip } from 'react-tooltip'
 
 // Import Swiper styles
 import "swiper/css";
@@ -53,13 +53,13 @@ const dialogsPortal = document.getElementById("dialogs-portal")!;
 //       `}
 // `;
 
-const validCodes:any = ['Seats','Shelter','Logo','Wheels',"Without Wheel Seats 9ft","With Wheel Seats 9ft",
-"Without Wheel Seats 12ft","With Wheel Seats 12ft",
-"Without Wheel Seats 15ft","With Wheel Seats 15ft",
-"Without Wheel Seats 18ft","With Wheel Seats 18ft",
-"Without Wheel Seats 21ft","With Wheel Seats 21ft",
-"Without Wheel Seats 24ft","With Wheel Seats 24ft",
-"Without Wheel Seats 30ft","With Wheel Seats 30ft",
+const validCodes: any = ['Seats', 'Shelter', 'Logo', 'Wheels', "Without Wheel Seats 9ft", "With Wheel Seats 9ft",
+  "Without Wheel Seats 12ft", "With Wheel Seats 12ft",
+  "Without Wheel Seats 15ft", "With Wheel Seats 15ft",
+  "Without Wheel Seats 18ft", "With Wheel Seats 18ft",
+  "Without Wheel Seats 21ft", "With Wheel Seats 21ft",
+  "Without Wheel Seats 24ft", "With Wheel Seats 24ft",
+  "Without Wheel Seats 30ft", "With Wheel Seats 30ft",
 
 ];
 
@@ -88,7 +88,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     items,
   } = useZakeke();
 
-  
+
   const { setIsLoading, isMobile } = useStore();
 
   // Keep saved the ID and not the refereces, they will change on each update
@@ -107,7 +107,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
   // Open tray for menu
   const [isTrayOpen, setIsTrayOpen] = useState<any | null>(false);
-
+  console.log("grups", groups)
   // Get the id of the selected group from the tray
   const [selectedGroupIdFromTray, selectGroupIdFromTray] = useState<
     number | null
@@ -135,11 +135,11 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   const [selectedFilteredAreas, setSelectedFilteredAreas] = useState<number>(0);
 
 
-  const updateSelectedFilter = (id:number) => {
+  const updateSelectedFilter = (id: number) => {
     setSelectedFilteredAreas(id)
   }
 
-  
+
   // Attributes can be in both groups and steps, so show the attributes of step or in a group based on selection
   const attributes = useMemo(
     () => (selectedStep || selectedGroup)?.attributes ?? [],
@@ -156,7 +156,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   }
 
   const hasEnabled = groups[4]?.attributes.some(attribute => attribute.enabled);
-  
+
   if (!hasEnabled) {
     groups.splice(4, 1);
   }
@@ -255,8 +255,8 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
   if (isAssetsLoading || !groups || groups.length === 0) return <Loader />;
 
-  console.log(groups[1],groups);
-  
+  console.log(groups[1], groups);
+
   // groups
   // -- attributes
   // -- -- options
@@ -336,7 +336,29 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     width: "100%",
     height: !selectedTrayPreviewOpenButton ? "12rem" : "70px",
   };
-
+  const getTooltipDetail = (name: string) => {
+    switch (name) {
+      case "Shelter":
+        return "Select various sizes for Shelter.";
+      case "Shelter Colors":
+        return "Choose colors available for Shelter.";
+      case "Wheels":
+        return "Select from different types of wheels.";
+      case "Seats":
+        return "Choose seats available in various styles.";
+      case "Shelter Logo":
+        return "Add custom logos to your Shelter.";
+      default:
+        return "Explore options available for this category.";
+    }
+  };
+  const observerErrorHandler = (error: { message: string; }) => {
+    if (error.message === "ResizeObserver loop completed with undelivered notifications.") {
+      return;
+    }
+    console.error(error);
+  };
+  window.addEventListener("error", observerErrorHandler);
   return (
     <>
       <div className="top-nav">
@@ -391,8 +413,8 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
             </span>
           </div>
           {selectedPersonalize ? (
-            <Designer togglePersonalize={togglePersonalize} selectedPersonalize={selectedPersonalize} 
-                      updateSelectedFilter={updateSelectedFilter} selectedFilteredAreas={selectedFilteredAreas}/>
+            <Designer togglePersonalize={togglePersonalize} selectedPersonalize={selectedPersonalize}
+              updateSelectedFilter={updateSelectedFilter} selectedFilteredAreas={selectedFilteredAreas} />
           ) : (
             ""
           )}
@@ -426,11 +448,11 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                 justifyContent: "center",
               }}
             >
-              {currentIndex+1 !== 1 ?  <button
+              {currentIndex + 1 !== 1 ? <button
                 className="previous-customization"
                 onClick={handleLeftClick}
               >
-                <div className="mc-prev">                 
+                <div className="mc-prev">
                   <AngleLeftSolid />
                   Back
                 </div>
@@ -445,7 +467,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                   }}
                 >
                   <div className="active-marketing-component-name">
-                    <span
+                    {/* <span
                       style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
@@ -454,22 +476,59 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                       }}
                     >
                       {groups[currentIndex]?.name}
-                    </span>
-                    {/* <span className="active-marketing-component-index">
-                      {" "}
-                      {currentIndex + 1} / {groups.length}
                     </span> */}
+
+
+                    <span // Dynamic tooltip content
+                      style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        lineHeight: "28px",
+                        cursor: "pointer",
+                        display: 'flex',// Makes the element look interactive
+                        alignItems: "center",
+                        gap: '10px'
+                      }}
+                    >
+                      {groups[currentIndex]?.name}
+                      <button
+                        data-tooltip-id={`tooltip-${groups[currentIndex]?.id}`} // Unique id for each group
+                        data-tooltip-variant="light"
+                        data-tooltip-content={getTooltipDetail(groups[currentIndex]?.name)}>
+                        <svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M12 18.01L12.01 17.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </button>
+
+
+
+
+                    </span>
+
+                    {/* Tooltip container */}
+
                   </div>
+                  <Tooltip id={`tooltip-${groups[currentIndex]?.id}`} place="top" style={{
+                    zIndex: 9999, // Ensures tooltip is above other elements
+                    // backgroundColor: "#a4a1a145", // Dark background for better contrast
+                    // color: "#fff", // White text
+                    padding: "8px",
+                    border: "1px solid #000",
+                    borderRadius: "4px",
+                  }} />
                 </div>
               </div>
-              {currentIndex+1 !== groups.length ? 
-              <button className="next-customization" onClick={handleRightClick}>
-                <div className="mc-prev">
-                  Next
-                  <AngleRightSolid />
-                </div>
-              </button> : ''}
-            </div>          
+              {currentIndex + 1 !== groups.length ?
+                <button className="next-customization" onClick={handleRightClick}>
+                  <div className="mc-prev">
+                    Next
+                    <AngleRightSolid />
+                  </div>
+                </button> : ''}
+            </div>
 
             {!isMobile && <Footer />}
 
@@ -603,100 +662,99 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                         }
                       >
                         {selectedGroup.attributes.map((opts, i) => {
-                        //  if (opts.code !== 'Seats' && opts.code != 'Shelter' && 
-                        //  opts.code !=  'Logo' && opts.code !=  'Wheels'
-                        //  ) 
-                        if (!validCodes.includes(opts.code))
-                         {
-                         if (opts.options.length <= 9) {
-                            if (opts.enabled) {
-                              return (
-                                opts.enabled &&
-                                opts.options.map((atrOpts) => {
-                                  if (atrOpts.enabled) {
-                                    return (
-                                      <ListItemColor
-                                        onClick={() => {
-                                          selectOption(atrOpts.id);
-                                          selectOptionId(atrOpts.id);
-                                          selectOptionName(atrOpts.name);
-                                        }}
-                                        selected={atrOpts.selected}
-                                        selectedColor={selectedColorName}
-                                      >
-                                        {atrOpts.imageUrl && (
-                                          <ListItemImage
-                                            src={atrOpts.imageUrl}
-                                          />
-                                        )}
-
-                                        <div
-                                          style={{
-                                            position: "absolute",
-                                            top: "100%",
+                          //  if (opts.code !== 'Seats' && opts.code != 'Shelter' && 
+                          //  opts.code !=  'Logo' && opts.code !=  'Wheels'
+                          //  ) 
+                          if (!validCodes.includes(opts.code)) {
+                            if (opts.options.length <= 9) {
+                              if (opts.enabled) {
+                                return (
+                                  opts.enabled &&
+                                  opts.options.map((atrOpts) => {
+                                    if (atrOpts.enabled) {
+                                      return (
+                                        <ListItemColor
+                                          onClick={() => {
+                                            selectOption(atrOpts.id);
+                                            selectOptionId(atrOpts.id);
+                                            selectOptionName(atrOpts.name);
                                           }}
+                                          selected={atrOpts.selected}
+                                          selectedColor={selectedColorName}
                                         >
-                                          {atrOpts.id === selectedOptionId
-                                            ? atrOpts.name
-                                            : ""}
-                                        </div>
-                                      </ListItemColor>
-                                    );
-                                  }
-                                })
-                              );
-                            } else return null;
+                                          {atrOpts.imageUrl && (
+                                            <ListItemImage
+                                              src={atrOpts.imageUrl}
+                                            />
+                                          )}
+
+                                          <div
+                                            style={{
+                                              position: "absolute",
+                                              top: "100%",
+                                            }}
+                                          >
+                                            {atrOpts.id === selectedOptionId
+                                              ? atrOpts.name
+                                              : ""}
+                                          </div>
+                                        </ListItemColor>
+                                      );
+                                    }
+                                  })
+                                );
+                              } else return null;
+                            }
                           }
-                        }
                         })}
 
                         {selectedGroup.attributes.map((opts, i) => {
-                        //  if (opts.code === 'Seats' || opts.code === 'Shelter' || 
-                        //  opts.code ===  'Logo' || opts.code ===  'Wheels') {
-                         if (validCodes.includes(opts.code)) { 
-                          if (opts.options.length <= 9) {
-                            if (opts.enabled) {
-                              return (
-                                opts.enabled &&
-                                opts.options.map((atrOpts) => {
-                                  if (atrOpts.enabled) {
-                                    return (
-                                      <ListItemColorBig
-                                        onClick={() => {
-                                          selectOption(atrOpts.id);
-                                          selectOptionId(atrOpts.id);
-                                          selectOptionName(atrOpts.name);
-                                        }}
-                                        selected={atrOpts.selected}
-                                        selectedColor={selectedColorName}
-                                      >
-                                        {atrOpts.imageUrl && (
-                                          <ListItemImageBig
-                                            src={atrOpts.imageUrl}
-                                          />
-                                        )}
-
-                                        <div
-                                          style={{
-                                            position: "absolute",
-                                            top: "100%",
+                          //  if (opts.code === 'Seats' || opts.code === 'Shelter' || 
+                          //  opts.code ===  'Logo' || opts.code ===  'Wheels') {
+                          if (validCodes.includes(opts.code)) {
+                            if (opts.options.length <= 9) {
+                              if (opts.enabled) {
+                                return (
+                                  opts.enabled &&
+                                  opts.options.map((atrOpts) => {
+                                    if (atrOpts.enabled) {
+                                      return (
+                                        <ListItemColorBig
+                                          onClick={() => {
+                                            selectOption(atrOpts.id);
+                                            selectOptionId(atrOpts.id);
+                                            selectOptionName(atrOpts.name);
                                           }}
+                                          selected={atrOpts.selected}
+                                          selectedColor={selectedColorName}
                                         >
-                                          {atrOpts.id === selectedOptionId
-                                            ? atrOpts.name
-                                            : ""}
-                                        </div>
-                                      </ListItemColorBig>
-                                    );
-                                  }
-                                })
-                              );
-                            } else return null;
+                                          {atrOpts.imageUrl && (
+                                            <ListItemImageBig
+                                              src={atrOpts.imageUrl}
+                                            />
+                                          )}
+
+                                          <div
+                                            style={{
+                                              position: "absolute",
+                                              top: "100%",
+                                            }}
+                                          >
+                                            {atrOpts.id === selectedOptionId
+                                              ? atrOpts.name
+                                              : ""}
+                                          </div>
+                                        </ListItemColorBig>
+                                      );
+                                    }
+                                  })
+                                );
+                              } else return null;
+                            }
                           }
-                        }
                         })}
                       </List>
-                      
+
                     )}
 
                   <List>
@@ -709,16 +767,16 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                             <Swiper
                               // spaceBetween={0}
                               slidesPerView={20} //20
-                              slidesPerGroup={1}                              
+                              slidesPerGroup={1}
                               pagination={{ clickable: true }}
-                              navigation = {{
+                              navigation={{
                                 nextEl: '.swiper-button-next',
                                 prevEl: '.swiper-button-prev',
                               }}
                               modules={[Navigation]}
                               onReachEnd={() => setIsNextDisabled(true)}
                             >
-                             <div className="swiper-button-prev"></div> 
+                              <div className="swiper-button-prev"></div>
                               {opts.enabled &&
                                 opts.options.map((atrOpts) => (
                                   <SwiperSlide key={atrOpts.id}>
@@ -749,59 +807,59 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                                     </ListItemColor>
                                   </SwiperSlide>
                                 ))}
-                               
-                               <div className={`swiper-button-next ${isNextDisabled ? 'swiper-button-disabled' : ''}`}></div> 
+
+                              <div className={`swiper-button-next ${isNextDisabled ? 'swiper-button-disabled' : ''}`}></div>
                             </Swiper>
-                            
+
                           );
-                        } 
-                      })}
-                  </List>
-
-                  
-                  <div>
-                  <List>
-                    {selectedGroup &&
-                      selectedGroup.attributes &&
-                      // selectedGroup.attributes?.name =! 'Shelter Colors' &&
-                      selectedGroup.attributes.map((opts, i) => {
-                        if (opts.enabled === false) return <></>;
-                        if (i > 0 && (opts.name != 'White' && opts.name != 'Black' && opts.name != 'Molded Seats Colors' && opts.name != 'Seats' ) && opts.enabled && opts.options.length <= 16) {
-                          if (!validCodes.includes(opts.code)) { 
-                          return opts.options.map((atrOpts) => (
-                            <ListItemColor
-                              key={atrOpts.id} // Always include a unique key when rendering lists
-                              onClick={() => {
-                                selectOption(atrOpts.id);
-                                selectOptionId(atrOpts.id);
-                                selectOptionName(atrOpts.name);
-                              }}
-                              selected={atrOpts.selected}
-                              selectedColor={selectedColorName}
-                            >
-                              {atrOpts.imageUrl && (
-                                <ListItemImage src={atrOpts.imageUrl} />
-                              )}
-
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  top: "96%",
-                                }}
-                              >
-                                {atrOpts.id === selectedOptionId ? atrOpts.name : ""}
-                              </div>
-                            </ListItemColor>
-                          ));
-                              }
-                        } else {
-                          // Ensure map always returns something, even if it's null
-                          return null;
                         }
                       })}
                   </List>
-                </div>
-                  
+
+
+                  <div>
+                    <List>
+                      {selectedGroup &&
+                        selectedGroup.attributes &&
+                        // selectedGroup.attributes?.name =! 'Shelter Colors' &&
+                        selectedGroup.attributes.map((opts, i) => {
+                          if (opts.enabled === false) return <></>;
+                          if (i > 0 && (opts.name != 'White' && opts.name != 'Black' && opts.name != 'Molded Seats Colors' && opts.name != 'Seats') && opts.enabled && opts.options.length <= 16) {
+                            if (!validCodes.includes(opts.code)) {
+                              return opts.options.map((atrOpts) => (
+                                <ListItemColor
+                                  key={atrOpts.id} // Always include a unique key when rendering lists
+                                  onClick={() => {
+                                    selectOption(atrOpts.id);
+                                    selectOptionId(atrOpts.id);
+                                    selectOptionName(atrOpts.name);
+                                  }}
+                                  selected={atrOpts.selected}
+                                  selectedColor={selectedColorName}
+                                >
+                                  {atrOpts.imageUrl && (
+                                    <ListItemImage src={atrOpts.imageUrl} />
+                                  )}
+
+                                  <div
+                                    style={{
+                                      position: "absolute",
+                                      top: "96%",
+                                    }}
+                                  >
+                                    {atrOpts.id === selectedOptionId ? atrOpts.name : ""}
+                                  </div>
+                                </ListItemColor>
+                              ));
+                            }
+                          } else {
+                            // Ensure map always returns something, even if it's null
+                            return null;
+                          }
+                        })}
+                    </List>
+                  </div>
+
                 </div>
               </div>
             )}
