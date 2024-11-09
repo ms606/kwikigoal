@@ -35,6 +35,7 @@ const Layout = styled.div`
   grid-template-rows: 0fr auto auto;
   height: 100%;
   width: 100%;
+  /* background-color: red; */
   overflow: hidden;
 `;
 
@@ -91,8 +92,8 @@ const App: FunctionComponent<{}> = () => {
     <ZakekeProvider environment={zakekeEnvironment}>
       <div id="modal-container" className="css-1q5ttm8">
 
-          {isMobile && <LayoutMobile />}
-          {/* {isMobile && (
+        {isMobile && <LayoutMobile />}
+        {/* {isMobile && (
             <Layout>
               <div style={{ backgroundColor: "rgb(249 246 248)" , width: "100%", border: "0px solid", height: "57%"}}>
                 <div
@@ -111,38 +112,38 @@ const App: FunctionComponent<{}> = () => {
               <Selector trayPreviewOpenButton3DFunc={trayPreviewOpenButton3DFunc} />              
             </Layout>            
           )} */}
-      
-          {!isMobile && (
-            <Layout>
-              <div
-                style={{
-                  display: "grid",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  // gridArea: "1 / 2 / 12 / 1",
-                  backgroundColor: "rgb(249 246 248)",
-                }}
-              >
-                <div
-                  className="ThreeDRenderer"
-                  style={
-                    selectedTrayPreviewOpenButton3D
-                      ? { width: "75vw", height: "75vh" }
-                      : { width: "80vw", height: "80vh", marginTop: "26px" }
-                  }
-                >
-                  <ZakekeViewer />
-                </div>
-              </div>
-              <Selector
-                trayPreviewOpenButton3DFunc={trayPreviewOpenButton3DFunc}
-              />
-            </Layout>
-          )}
 
-          {/* {(isLoading || isSceneLoading || isAssetsLoading) && <LoadingOverlay />} */}
-          <DialogsRenderer />
-        </div>
+        {!isMobile && (
+          <Layout>
+            <div
+              style={{
+                display: "grid",
+                alignItems: "center",
+                justifyContent: "center",
+                // gridArea: "1 / 2 / 12 / 1",
+                backgroundColor: "rgb(249 246 248)",
+              }}
+            >
+              <div
+                className="ThreeDRenderer"
+                style={
+                  selectedTrayPreviewOpenButton3D
+                    ? { width: "75vw", height: "75vh" }
+                    : { width: "80vw", height: "80vh", marginTop: "26px" }
+                }
+              >
+                <ZakekeViewer />
+              </div>
+            </div>
+            <Selector
+              trayPreviewOpenButton3DFunc={trayPreviewOpenButton3DFunc}
+            />
+          </Layout>
+        )}
+
+        {/* {(isLoading || isSceneLoading || isAssetsLoading) && <LoadingOverlay />} */}
+        <DialogsRenderer />
+      </div>
       {/* </div> */}
     </ZakekeProvider>
   );

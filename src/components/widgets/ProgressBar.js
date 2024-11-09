@@ -53,12 +53,22 @@ const LoaderFill = styled.div`
   width: ${({ completed }) => completed && `${completed}%`};
   background-color: #008556;
   border-radius: "inherit";
+
+   @media (max-width: 768px) { /* Adjust the breakpoint as needed */
+      margin: 0px 0px;
+
+  }
 `;
 
 const VideoPlayer = styled.video`
-    width: 76.5vw;
-    height: 67vh;
+  width: 76.5vw;
+  height: 67vh;
+
+  @media (max-width: 768px) { /* Adjust the breakpoint as needed */
+    height: auto;
+  }
 `;
+
 
 const ProgressBar = ({ bgColor, completed }) => {
   const { isSceneLoading, translations } = useZakeke();
