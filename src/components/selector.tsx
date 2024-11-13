@@ -492,7 +492,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                       }}
                     >
                       {groups[currentIndex]?.name}
-                      <div
+                      {/* <div
                         style={{
                           cursor: "pointer",
                         }}
@@ -505,7 +505,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                           <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                           <path d="M12 18.01L12.01 17.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                      </div>
+                      </div> */}
 
 
 

@@ -53,6 +53,8 @@ import {
   ZoomOutIcon,
 } from "./LayoutStyled";
 
+import { Tooltip } from 'react-tooltip'
+
 export type PropChangeHandler = (
   item: EditTextItem | EditImageItem,
   prop: string,
@@ -227,13 +229,13 @@ const Designer: FC<{
   } = useZakeke();
 
   const dynamicVals = translations?.dynamics;
-  
+
   const customizerRef = useRef<any | null>(null);
   const [selectedCarouselSlide, setSelectedCarouselSlide] = useState<number>(0);
 
   const filteredAreas =
     product?.areas.filter((area) => isAreaVisible(area.id)) ?? [];
-    
+
   let finalVisibleAreas: ProductArea[] = [];
 
   const [moveElements, setMoveElements] = useState(false);
@@ -282,7 +284,7 @@ const Designer: FC<{
       ? finalVisibleAreas[0].id
       : 0
   );
-  
+
 
   let currentTemplateArea = currentTemplate!.areas.find(
     (x) => x.id === actualAreaId
@@ -340,12 +342,11 @@ const Designer: FC<{
 
 
   useEffect(() => {
-    if(selectedFilteredAreas > 0)
-  {
-    setActualAreaId(selectedFilteredAreas)
-  }
-  },[selectedFilteredAreas])
-  
+    if (selectedFilteredAreas > 0) {
+      setActualAreaId(selectedFilteredAreas)
+    }
+  }, [selectedFilteredAreas])
+
 
   function getSupportedUploadFileFormats(templateId: number, areaId: number) {
     const restrictions = getTemplateUploadRestrictictions(templateId, areaId);
@@ -555,16 +556,45 @@ const Designer: FC<{
       </SingleValueContainer>
     );
   };
+  console.log('finalVisibleAreas', finalVisibleAreas)
 
+  const getTooltipDetail = (name: string) => {
+    switch (name) {
+      case "Rear Panel(s)":
+        return "The main rear panel area of the product.";
+      case "Side Panel(s)":
+        return "The side panel area, available for customization.";
+      case "Side Logo Right":
+        return "Right side logo placement.";
+      case "Side Logo Left":
+        return "Left side logo placement.";
+      case "Rear Panel Logo":
+        return "Rear panel logo placement area.";
+      case "Post Wrap":
+        return "The area around the post for wrapping.";
+      case "Top Crossbar":
+        return "The top crossbar area.";
+      default:
+        return "";
+    }
+  };
+
+  const observerErrorHandler = (error: { message: string; }) => {
+    if (error.message === "ResizeObserver loop completed with undelivered notifications.") {
+      return;
+    }
+    console.error(error);
+  };
+  window.addEventListener("error", observerErrorHandler);
   return (
     <>
-      
-<div  onClick={togglePersonalize} style={{display: 'flex', justifyContent: 'end'}}> Close 
-      <Icon> <CloseIcon /></Icon>
-      </div> 
+
+      <div onClick={togglePersonalize} style={{ display: 'flex', justifyContent: 'end' }}> Close
+        <Icon> <CloseIcon /></Icon>
+      </div>
       {!moveElements && (
 
-        
+
         <DesignerContainer isMobile={isMobile}>
           {/* Templates */}
           {!isMobile && templates.length > 1 && (
@@ -638,22 +668,47 @@ const Designer: FC<{
             </CarouselContainer>
           )} */}
 
-      
-            <div style={{display: 'flex', flexDirection: 'row', width: '100%', height: '74px', flexFlow: 'wrap'}}>
-              {finalVisibleAreas.map((area) => (
-                <Area
-                  key={area.id}
-                  selected={actualAreaId === area.id}
-                  onClick={() => {setActualAreaId(area.id);
-                    if(area) {
-                      updateSelectedFilter(area.id)
-                    }   
+
+
+          <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: '74px', flexFlow: 'wrap' }}>
+            {finalVisibleAreas.map((area) => (
+              <Area
+                key={area.id}
+                selected={actualAreaId === area.id}
+                onClick={() => {
+                  setActualAreaId(area.id);
+                  if (area) {
+                    updateSelectedFilter(area.id);
+                  }
+                }}
+              >
+                {area.name}
+                <div
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: "2px"
                   }}
+                  data-tooltip-id={`tooltip-${area.name.replace(/\s+/g, "-")}`} // Unique id for each group
+                  data-tooltip-variant="light"
+                  data-tooltip-content={getTooltipDetail(area.name)} // Tooltip content based on area name
                 >
-                  {area.name}
-                </Area>
-              ))}
-            </div>
+                  <svg width="24" height="24" strokeWidth="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M12 18.01L12.01 17.9989" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+
+                <Tooltip id={`tooltip-${area.name.replace(/\s+/g, "-")}`} place="top" style={{
+                  zIndex: 12,
+                  // padding: "8px",
+                  border: "1px solid #000",
+                  borderRadius: "4px",
+                }} />
+              </Area>
+            ))}
+
+          </div>
 
           {isMobile && translatedTemplates.length > 1 && (
             <SelectContainer>
@@ -682,7 +737,7 @@ const Designer: FC<{
           {isMobile && translatedAreas.length > 1 && (
             <SelectContainer>
               {/* <span>{T._("Customizable Areas", "Composer")}</span> */}
-              <span>{dynamicVals?.get('Customizable Areas')}</span>              
+              <span>{dynamicVals?.get('Customizable Areas')}</span>
               <Select
                 styles={{
                   control: (base) => ({
@@ -766,7 +821,7 @@ const Designer: FC<{
                   <Button
                     disabled={
                       copyrightMessage &&
-                      copyrightMessage.additionalData.enabled
+                        copyrightMessage.additionalData.enabled
                         ? !copyrightMandatoryCheckbox
                         : false
                     }
@@ -787,7 +842,7 @@ const Designer: FC<{
                         )
                           ? T._("Upload another image", "Composer")
                           : T._("Upload image", "Composer")
-                          }{" "}
+                        }{" "}
                       </span>
                     </span>
                   </Button>
@@ -856,22 +911,22 @@ const Designer: FC<{
           isMobile={isMobile}
           className="zakeke-container"
         >
-         
+
           <ZakekeDesigner ref={customizerRef} areaId={actualAreaId} />
-         
+
           {/* <IconsAndDesignerContainer> */}
-            {/* <ZoomIconIn hoverable onClick={() => customizerRef.current.zoomIn()}>
+          {/* <ZoomIconIn hoverable onClick={() => customizerRef.current.zoomIn()}>
 							<SearchPlusSolid />
 						</ZoomIconIn>
 						<ZoomIconOut hoverable onClick={() => customizerRef.current.zoomOut()}>
 							<SearchMinusSolid />
 						</ZoomIconOut> */}
           {/* </IconsAndDesignerContainer> */}
-         <div style={{position: "relative", top: "26px"}}>
-         <Button isFullWidth primary onClick={() => setMoveElements(false)}>
-            <span>{"OK"} </span>
-          </Button>
-         </div>   
+          <div style={{ position: "relative", top: "26px" }}>
+            <Button isFullWidth primary onClick={() => setMoveElements(false)}>
+              <span>{"OK"} </span>
+            </Button>
+          </div>
         </ZakekeDesignerContainer>
       )}
     </>
