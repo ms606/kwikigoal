@@ -1,5 +1,5 @@
 import { useZakeke } from 'zakeke-configurator-react';
-import {AddToCartButton, Button, Icon, TooltipContent } from '../Atomic';
+import { AddToCartButton, Button, Icon, TooltipContent } from '../Atomic';
 import SaveDesignsDraftDialog from '../dialog/SaveDesignsDraftDialog';
 import { T } from '../../Helpers';
 import { TailSpin } from 'react-loader-spinner';
@@ -26,6 +26,7 @@ import {
 //import useDropdown from 'hooks/useDropdown';
 import React, { useRef, useState } from 'react';
 import LoadingOverlay from "../widgets/LoadingOverlay";
+import QuotationFormDialog from '../dialog/QuanityDialog';
 
 const PriceInfoTextContainer = styled.div`
 	font-size: 14px;
@@ -38,8 +39,8 @@ const OutOfStockTooltipContent = styled(TooltipContent)`
 const Footer = () => {
 	//const [openOutOfStockTooltip, closeOutOfStockTooltip, isOutOfStockTooltipVisible, Dropdown] = useDropdown();
 	const addToCartButtonRef = useRef<HTMLButtonElement>(null);
-    const [pdfIsLoading, setPdfIsLoading] = useState<Boolean>(false);
-	 
+	const [pdfIsLoading, setPdfIsLoading] = useState<Boolean>(false);
+
 	const {
 		useLegacyScreenshot,
 		setCameraByName,
@@ -56,8 +57,8 @@ const Footer = () => {
 		//additionalCustomProperties,
 		saveComposition,
 		createQuote,
-		nftSettings, 
-		translations, 
+		nftSettings,
+		translations,
 		groups
 	} = useZakeke();
 
@@ -73,15 +74,15 @@ const Footer = () => {
 
 	const { showDialog, closeDialog } = useDialogManager();
 
-	 const handleAddToCart = () => {
-		
+	const handleAddToCart = () => {
+
 		const cartMessage = eventMessages?.find((message) => message.eventID === 4);
-		const staticsVals = translations?.statics; 
-        
+		const staticsVals = translations?.statics;
+
 		const findSizeIndex = groups.findIndex((obj) => obj.name.toLowerCase() === 'marime');
 		const isSizeNotSelected = groups[findSizeIndex]?.attributes[0].options[0].selected === true;
-		console.log(isSizeNotSelected,'isSizeNotSelected');
-		
+		console.log(isSizeNotSelected, 'isSizeNotSelected');
+
 		if (cartMessage && cartMessage.visible && !isDraftEditor && !isEditorMode && !isSizeNotSelected)
 			showDialog(
 				'question',
@@ -89,7 +90,7 @@ const Footer = () => {
 					alignButtons='center'
 					eventMessage={cartMessage?.description}
 					buttonNoLabel={T._('Cancel', 'Composer')}
-					buttonYesLabel={staticsVals?.get('Add to cart')} 
+					buttonYesLabel={staticsVals?.get('Add to cart')}
 					onYesClick={() => {
 						// if (nftSettings && nftSettings.isNFTEnabled && !isDraftEditor)
 						// 	showDialog(
@@ -145,16 +146,16 @@ const Footer = () => {
 		// 		/>
 		// 	);
 		else {
-			if(isSizeNotSelected){
+			if (isSizeNotSelected) {
 				showError('SELECTEAZA MARIME')
 				// alert('size not selected')
 			}
 			else {
 				addToCart([], undefined, useLegacyScreenshot);
 			}
-			
+
 		}
-	 };
+	};
 
 	const showError = (error: string) => {
 		showDialog('error', <ErrorDialog error={error} onCloseClick={() => closeDialog('error')} />);
@@ -185,7 +186,7 @@ const Footer = () => {
 	};
 
 	const handleSubmitRequestQuote = async (formData: any) => {
-		let thereIsARequiredFormEmpty = formData.some((form: any) => form.required && form.value === '');
+		let thereIsARequiredFormEmpty = formData?.some((form: any) => form.required && form.value === '');
 		if (thereIsARequiredFormEmpty)
 			showDialog(
 				'error',
@@ -228,31 +229,31 @@ const Footer = () => {
 			}
 	};
 
-	// const handleGetQuoteClick = async () => {
-	// 	let rule = product?.quoteRule;
-	// 	if (rule)
-	// 		showDialog(
-	// 			'request-quotation',
-	// 			<QuotationFormDialog getQuoteRule={rule} onFormSubmit={handleSubmitRequestQuote} />
-	// 		);
-	// };
+	const handleGetQuoteClick = async () => {
+		let rule = product?.quoteRule;
+		if (rule)
+			showDialog(
+				'request-quotation',
+				<QuotationFormDialog quantityRule={rule} onClick={handleSubmitRequestQuote} />
+			);
+	};
 	const isOutOfStock = false;
 	const isBuyVisibleForQuoteRule = product?.quoteRule ? product.quoteRule.allowAddToCart : true;
 	const isAddToCartDisabled = isOutOfStock || isAddToCartLoading;
-  
+
 
 
 	return (
 		<FooterContainer>
 			{/* {T.translations?.statics && ( */}
-				<>
-				{pdfIsLoading && 
-				<LoadingOverlay />}
+			<>
+				{pdfIsLoading &&
+					<LoadingOverlay />}
 
-					{product && product.quantityRule && (
-						<QuantityContainer>
-							<label>{T._d('Quantity')}</label>
-							{/* <NumericInput
+				{product && product.quantityRule && (
+					<QuantityContainer>
+						<label>{T._d('Quantity')}</label>
+						{/* <NumericInput
 								value={quantity}
 								readOnly
 								onInput={(e: any) => setQuantity(parseFloat(e.currentTarget.value))}
@@ -268,11 +269,11 @@ const Footer = () => {
 								}
 								step={product.quantityRule.step != null ? product.quantityRule.step : undefined}
 							/> */}
-						</QuantityContainer>
-					)}
-					<FooterRightElementsContainer className='right-footer'>
-						{/* Extension Fields */}
-						{/* {additionalCustomProperties && (
+					</QuantityContainer>
+				)}
+				<FooterRightElementsContainer className='right-footer'>
+					{/* Extension Fields */}
+					{/* {additionalCustomProperties && (
 							<ExtensionFieldsContainer>
 								{additionalCustomProperties.map(
 									(
@@ -298,8 +299,8 @@ const Footer = () => {
 							</ExtensionFieldsContainer>
 						)} */}
 
-						{/* Price */}
-						{/* {price !== null && price > 0 && (!sellerSettings || !sellerSettings.hidePrice) && (
+					{/* Price */}
+					{/* {price !== null && price > 0 && (!sellerSettings || !sellerSettings.hidePrice) && (
 							<PriceContainer>
 							
 								{sellerSettings && sellerSettings.priceInfoText && (
@@ -310,29 +311,29 @@ const Footer = () => {
 							</PriceContainer>
 						)} */}
 
-						{/* PDF preview */}
-						{/* <Button key={'pdf'} onClick={() => handlePdfClick()}>
+					{/* PDF preview */}
+					{/* <Button key={'pdf'} onClick={() => handlePdfClick()}>
 							<Icon>
 								<PdfSolid />
 							</Icon>
 						</Button> */}
 
-						{/* Save compostition */}
-						{!isDraftEditor &&
-							!isEditorMode &&
-							!isViewerMode &&
-							sellerSettings &&
-							sellerSettings.canSaveDraftComposition && (
-								<Button key={'save'} onClick={() => handleSaveClick()}>
-									<Icon>
-										<SaveSolid />
-									</Icon>
-								</Button>
-							)
-						}
+					{/* Save compostition */}
+					{!isDraftEditor &&
+						!isEditorMode &&
+						!isViewerMode &&
+						sellerSettings &&
+						sellerSettings.canSaveDraftComposition && (
+							<Button key={'save'} onClick={() => handleSaveClick()}>
+								<Icon>
+									<SaveSolid />
+								</Icon>
+							</Button>
+						)
+					}
 
-						{/* Share */}
-						{/* {sellerSettings && sellerSettings.shareType !== 0 && !isEditorMode && (
+					{/* Share */}
+					{/* {sellerSettings && sellerSettings.shareType !== 0 && !isEditorMode && (
 							<Button key={'share'} onClick={() => handleShareClick()}>
 								<Icon>
 									<ShareSolid />
@@ -340,42 +341,42 @@ const Footer = () => {
 							</Button>
 						)} */}
 
-						{/* Get a quote */}
-						{/* {product?.quoteRule && !isViewerMode && !isDraftEditor && !isEditorMode && (
+					{/* Get a quote */}
+					{/* {product?.quoteRule && !isViewerMode && !isDraftEditor && !isEditorMode && (
 							<Button key={'quote'} primary onClick={() => handleGetQuoteClick()}>
 								{isQuoteLoading && <TailSpin color='#FFFFFF' height='25px' />}
 								{!isQuoteLoading && <span>{T._('Get a quote', 'Composer')}</span>}
 							</Button>
 						)} */}
 
-						{/* Add to cart */}
-						{/* {isBuyVisibleForQuoteRule && !isViewerMode && ( */}
-						<AddToCartButton
-								ref={addToCartButtonRef}
-								//onPointerEnter={() => {
-								// 	if (isAddToCartDisabled) openOutOfStockTooltip(addToCartButtonRef.current!, 'top', 'top');
-								// }}
-								// onPointerLeave={() => {
-								// 	closeOutOfStockTooltip();
-								// }}
-								disabled={isAddToCartDisabled}
-								primary
-								//onClick={!isAddToCartDisabled ? () => handleAddToCart() : () => null}
-								onClick={() => handleAddToCart()}
-						>
-								{isAddToCartLoading && <TailSpin color='#FFFFFF' height='25px' />}
-								{!isAddToCartLoading && !isOutOfStock && (
-									<span>
-										{isDraftEditor || isEditorMode
-											? T._('Save', 'Composer')
-											: T._('Get a quote', 'Composer')}
-									</span>
-								)}
-								{!isAddToCartLoading && isOutOfStock && <span>{T._('OUT OF STOCK', 'Composer')}</span>}
-						</AddToCartButton>
-						{/* )} */}
-					</FooterRightElementsContainer>
-				</>
+					{/* Add to cart */}
+					{/* {isBuyVisibleForQuoteRule && !isViewerMode && ( */}
+					<AddToCartButton
+						ref={addToCartButtonRef}
+						//onPointerEnter={() => {
+						// 	if (isAddToCartDisabled) openOutOfStockTooltip(addToCartButtonRef.current!, 'top', 'top');
+						// }}
+						// onPointerLeave={() => {
+						// 	closeOutOfStockTooltip();
+						// }}
+						disabled={isAddToCartDisabled}
+						primary
+						//onClick={!isAddToCartDisabled ? () => handleAddToCart() : () => null}
+						onClick={() => handleGetQuoteClick()}
+					>
+						{isAddToCartLoading && <TailSpin color='#FFFFFF' height='25px' />}
+						{!isAddToCartLoading && !isOutOfStock && (
+							<span>
+								{isDraftEditor || isEditorMode
+									? T._('Save', 'Composer')
+									: T._('Get a quote', 'Composer')}
+							</span>
+						)}
+						{!isAddToCartLoading && isOutOfStock && <span>{T._('OUT OF STOCK', 'Composer')}</span>}
+					</AddToCartButton>
+					{/* )} */}
+				</FooterRightElementsContainer>
+			</>
 			{/* )} */}
 		</FooterContainer>
 	);

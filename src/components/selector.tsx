@@ -107,7 +107,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
   // Open tray for menu
   const [isTrayOpen, setIsTrayOpen] = useState<any | null>(false);
-  console.log("grups", groups)
+  // console.log("grups", groups)
   // Get the id of the selected group from the tray
   const [selectedGroupIdFromTray, selectGroupIdFromTray] = useState<
     number | null
@@ -255,7 +255,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
 
   if (isAssetsLoading || !groups || groups.length === 0) return <Loader />;
 
-  console.log(groups[1], groups);
+  // console.log(groups[1], groups);
 
   // groups
   // -- attributes
@@ -359,6 +359,9 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
     console.error(error);
   };
   window.addEventListener("error", observerErrorHandler);
+
+  // console.log('selectedGroup', selectedGroup)
+  // console.log('selectOptionName', selectedOptionName)
   return (
     <>
       <div className="top-nav">
@@ -448,16 +451,18 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                 justifyContent: "center",
               }}
             >
-              {currentIndex + 1 !== 1 ? <button
-                className="previous-customization"
-                onClick={handleLeftClick}
-              >
-                <div className="mc-prev">
-                  <AngleLeftSolid />
-                  Back
-                </div>
-              </button> : ''}
+              {currentIndex + 1 !== 1 ?
+                <button
+                  className="previous-customization"
+                  onClick={handleLeftClick}
+                >
+                  <div className="mc-prev">
+                    <AngleLeftSolid />
+                    Back
+                  </div>
+                </button> : ''}
 
+              {/* {!(selectedOptionName === "Add" && groups[currentIndex]?.name === "Shelter Logo") && ( */}
               <div className="tray-header-1">
                 <div
                   style={{
@@ -467,65 +472,53 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
                   }}
                 >
                   <div className="active-marketing-component-name">
-                    {/* <span
-                      style={{
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        lineHeight: "28px",
-                      }}
-                    >
-                      {groups[currentIndex]?.name}
-                    </span> */}
-
-
-                    <span // Dynamic tooltip content
+                    <span
                       style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
                         lineHeight: "28px",
                         cursor: "pointer",
-                        display: 'flex',// Makes the element look interactive
+                        display: 'flex',
                         alignItems: "center",
                         gap: '10px'
                       }}
                     >
+                      {/* Group name dynamically displayed */}
                       {groups[currentIndex]?.name}
+
+                      {/* Uncomment and customize tooltip for group details if needed */}
                       {/* <div
-                        style={{
-                          cursor: "pointer",
-                        }}
-
-                        data-tooltip-id={`tooltip-${groups[currentIndex]?.id}`} // Unique id for each group
-                        data-tooltip-variant="light"
-                        data-tooltip-content={getTooltipDetail(groups[currentIndex]?.name)}>
-                        <svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                          <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                          <path d="M12 18.01L12.01 17.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                      </div> */}
-
-
-
-
+            style={{ cursor: "pointer" }}
+            data-tooltip-id={`tooltip-${groups[currentIndex]?.id}`}
+            data-tooltip-variant="light"
+            data-tooltip-content={getTooltipDetail(groups[currentIndex]?.name)}
+          >
+            <svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 18.01L12.01 17.9989" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div> */}
                     </span>
-
-                    {/* Tooltip container */}
-
                   </div>
-                  <Tooltip id={`tooltip-${groups[currentIndex]?.id}`} place="top" style={{
-                    zIndex: 9999, // Ensures tooltip is above other elements
-                    // backgroundColor: "#a4a1a145", // Dark background for better contrast
-                    // color: "#fff", // White text
-                    padding: "8px",
-                    border: "1px solid #000",
-                    borderRadius: "4px",
-                  }} />
+
+                  {/* Tooltip styling for future use */}
+                  <Tooltip
+                    id={`tooltip-${groups[currentIndex]?.id}`}
+                    place="top"
+                    style={{
+                      zIndex: 9999,
+                      padding: "8px",
+                      border: "1px solid #000",
+                      borderRadius: "4px",
+                    }}
+                  />
                 </div>
               </div>
-              {currentIndex + 1 !== groups.length ?
+              {/* )} */}
+
+              {currentIndex + 1 !== groups.length && !(selectedOptionName === "Add" && groups[currentIndex]?.name === "Shelter Text") ?
                 <button className="next-customization" onClick={handleRightClick}>
                   <div className="mc-prev">
                     Next
