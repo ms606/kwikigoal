@@ -26,7 +26,9 @@ import {
 //import useDropdown from 'hooks/useDropdown';
 import React, { useRef, useState } from 'react';
 import LoadingOverlay from "../widgets/LoadingOverlay";
-import QuotationFormDialog from '../dialog/QuanityDialog';
+// import QuotationFormDialog from '../dialog/QuanityDialog';
+
+import QuotationFormDialog from '../dialog/QuotationFormDialog';
 
 const PriceInfoTextContainer = styled.div`
 	font-size: 14px;
@@ -186,19 +188,21 @@ const Footer = () => {
 	};
 
 	const handleSubmitRequestQuote = async (formData: any) => {
-		let thereIsARequiredFormEmpty = formData?.some((form: any) => form.required && form.value === '');
-		if (thereIsARequiredFormEmpty)
-			showDialog(
-				'error',
-				<ErrorDialog
-					error={T._(
-						'Failed to send the quotation since there is at least 1 required field empty.',
-						'Composer'
-					)}
-					onCloseClick={() => closeDialog('error')}
-				/>
-			);
-		else
+		console.log(formData,'formData');
+		
+		// let thereIsARequiredFormEmpty = formData?.some((form: any) => form.required && form.value === '');
+		// if (thereIsARequiredFormEmpty)
+		// 	showDialog(
+		// 		'error',
+		// 		<ErrorDialog
+		// 			error={T._(
+		// 				'Failed to send the quotation since there is at least 1 required field empty.',
+		// 				'Composer'
+		// 			)}
+		// 			onCloseClick={() => closeDialog('error')}
+		// 		/>
+		// 	);
+		// else
 			try {
 				closeDialog('request-quotation');
 				setIsQuoteLoading(true);
@@ -234,9 +238,10 @@ const Footer = () => {
 		if (rule)
 			showDialog(
 				'request-quotation',
-				<QuotationFormDialog quantityRule={rule} onClick={handleSubmitRequestQuote} />
+				<QuotationFormDialog getQuoteRule={rule} onFormSubmit={handleSubmitRequestQuote} />
 			);
 	};
+
 	const isOutOfStock = false;
 	const isBuyVisibleForQuoteRule = product?.quoteRule ? product.quoteRule.allowAddToCart : true;
 	const isAddToCartDisabled = isOutOfStock || isAddToCartLoading;
