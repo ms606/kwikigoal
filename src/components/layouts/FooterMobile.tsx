@@ -276,46 +276,46 @@ const FooterMobile = () => {
 		}
 	};
 
-	const handleSubmitRequestQuote = async (formData: any) => {
-		let thereIsARequiredFormEmpty = formData.some((form: any) => form.required && form.value === '');
-		if (thereIsARequiredFormEmpty)
-			showDialog(
-				'error',
-				<ErrorDialog
-					error={T._(
-						'Failed to send the quotation since there is at least 1 required field empty.',
-						'Composer'
-					)}
-					onCloseClick={() => closeDialog('error')}
-				/>
-			);
-		else
-			try {
-				closeDialog('request-quotation');
-				setIsQuoteLoading(true);
-				setCameraByName('buy_screenshot_camera', false, false);
-				await saveComposition();
-				await createQuote(formData);
-				showDialog(
-					'message',
-					<MessageDialog message={T._('Request for quotation sent successfully', 'Composer')} />
-				);
-				setIsQuoteLoading(false);
-			} catch (ex) {
-				console.error(ex);
-				setIsQuoteLoading(false);
-				showDialog(
-					'error',
-					<ErrorDialog
-						error={T._(
-							'An error occurred while sending request for quotation. Please try again.',
-							'Composer'
-						)}
-						onCloseClick={() => closeDialog('error')}
-					/>
-				);
-			}
-	};
+	// const handleSubmitRequestQuote = async (formData: any) => {
+	// 	let thereIsARequiredFormEmpty = formData.some((form: any) => form.required && form.value === '');
+	// 	if (thereIsARequiredFormEmpty)
+	// 		showDialog(
+	// 			'error',
+	// 			<ErrorDialog
+	// 				error={T._(
+	// 					'Failed to send the quotation since there is at least 1 required field empty.',
+	// 					'Composer'
+	// 				)}
+	// 				onCloseClick={() => closeDialog('error')}
+	// 			/>
+	// 		);
+	// 	else
+	// 		try {
+	// 			closeDialog('request-quotation');
+	// 			setIsQuoteLoading(true);
+	// 			setCameraByName('buy_screenshot_camera', false, false);
+	// 			await saveComposition();
+	// 			await createQuote(formData);
+	// 			showDialog(
+	// 				'message',
+	// 				<MessageDialog message={T._('Request for quotation sent successfully', 'Composer')} />
+	// 			);
+	// 			setIsQuoteLoading(false);
+	// 		} catch (ex) {
+	// 			console.error(ex);
+	// 			setIsQuoteLoading(false);
+	// 			showDialog(
+	// 				'error',
+	// 				<ErrorDialog
+	// 					error={T._(
+	// 						'An error occurred while sending request for quotation. Please try again.',
+	// 						'Composer'
+	// 					)}
+	// 					onCloseClick={() => closeDialog('error')}
+	// 				/>
+	// 			);
+	// 		}
+	// };
 
 	// const handleGetQuoteClick = async () => {
 	// 	let rule = product?.quoteRule;
