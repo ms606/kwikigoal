@@ -561,23 +561,30 @@ const Designer: FC<{
   const getTooltipDetail = (name: string) => {
     switch (name) {
       case "Rear Panel(s)":
-        return "The main rear panel area of the product.";
+        return "Add customization across the rear panels.";
       case "Side Panel(s)":
-        return "The side panel area, available for customization.";
-      case "Side Logo Right":
-        return "Right side logo placement.";
-      case "Side Logo Left":
-        return "Left side logo placement.";
-      case "Rear Panel Logo":
-        return "Rear panel logo placement area.";
-      case "Post Wrap":
-        return "The area around the post for wrapping.";
+        return "Add matching customization on left and right side panels.";
       case "Top Crossbar":
-        return "The top crossbar area.";
+        return "Add customization to the top cross bar.";
+      case "Post Wrap":
+        return "Add matching customization to the left and right posts.";
+      case "Rear Panel Logo":
+        return "Add matching customization to each rear panel.";
+      case "Side Logo Left":
+        return "Add customization to the left side panel.";
+      case "Side Logo Right":
+        return "Add customization to the right side panel.";
+      case "Bench Plank":
+        return "Add customization to the backrest bench plank.";
+      case "Luxury Seat Bottom":
+        return "Add customization to the front of the seat bottom.";
+      case "Luxury Seat Top":
+        return "Add customization to the headrest of the luxury seat.";
       default:
         return "";
     }
   };
+
 
   const observerErrorHandler = (error: { message: string; }) => {
     if (error.message === "ResizeObserver loop completed with undelivered notifications.") {
