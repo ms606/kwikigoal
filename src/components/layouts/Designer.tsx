@@ -593,6 +593,9 @@ const Designer: FC<{
     console.error(error);
   };
   window.addEventListener("error", observerErrorHandler);
+
+  console.log('finalVisibleAreas', finalVisibleAreas)
+  console.log('actualAreaId', actualAreaId)
   return (
     <>
 
@@ -823,7 +826,7 @@ const Designer: FC<{
                 </Button>
               )}
 
-              {/* {showUploadButton && (
+              {showUploadButton && (
                 <>
                   <Button
                     disabled={
@@ -854,7 +857,7 @@ const Designer: FC<{
                     </span>
                   </Button>
                 </>
-              )} */}
+              )}
               <SupportedFormatsList>
                 {T._("Supported file formats:", "Composer") +
                   " " +
