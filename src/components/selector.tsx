@@ -518,13 +518,15 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
               </div>
               {/* )} */}
 
-              {currentIndex + 1 !== groups.length && !(selectedOptionName === "Add" && groups[currentIndex]?.name === "Shelter Text") ?
+              {currentIndex + 1 !== groups.length - 2 && (
                 <button className="next-customization" onClick={handleRightClick}>
                   <div className="mc-prev">
                     Next
                     <AngleRightSolid />
                   </div>
-                </button> : ''}
+                </button>
+              )}
+
             </div>
 
             {!isMobile && <Footer />}

@@ -556,7 +556,7 @@ const Designer: FC<{
       </SingleValueContainer>
     );
   };
-  console.log('finalVisibleAreas', finalVisibleAreas)
+  // console.log('finalVisibleAreas', finalVisibleAreas)y
 
   const getTooltipDetail = (name: string) => {
     switch (name) {
@@ -823,7 +823,7 @@ const Designer: FC<{
                 </Button>
               )}
 
-              {showUploadButton && (
+              {/* {showUploadButton && (
                 <>
                   <Button
                     disabled={
@@ -854,7 +854,7 @@ const Designer: FC<{
                     </span>
                   </Button>
                 </>
-              )}
+              )} */}
               <SupportedFormatsList>
                 {T._("Supported file formats:", "Composer") +
                   " " +
