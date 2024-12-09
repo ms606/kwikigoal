@@ -400,12 +400,26 @@ const Designer: FC<{
       <AddTextDialog
         onClose={() => closeDialog("add-text")}
         onConfirm={(item) => {
+          console.log("item-----------------------", item);
           addItemText(item, actualAreaId);
+
+          // Check if actualAreaId is 393536 and items are available
+          if (actualAreaId === 393536 && items && Array.isArray(items)) {
+            // Find the logo item with areaId 403940
+            const logo = items.find(item => item.areaId === 403940);
+
+            // Safely remove the logo item if found
+            if (logo && logo.guid) {
+              removeItem(logo.guid);
+            }
+          }
+
           closeDialog("add-text");
         }}
       />
     );
   };
+
 
   const handleAddImageFromGalleryClick = async () => {
     showDialog(
@@ -413,7 +427,21 @@ const Designer: FC<{
       <ImagesGalleryDialog
         onClose={() => closeDialog("add-image")}
         onImageSelected={(image: { imageID: number }) => {
+          console.log("image", image);
+
           addItemImage(image.imageID, actualAreaId);
+
+          if (actualAreaId === 403940 && items && Array.isArray(items)) {
+            // Find the logo item with areaId 403940
+            const logo = items.find(item => item.areaId === 393536);
+
+            // Safely remove the logo item if found
+            if (logo && logo.guid) {
+              removeItem(logo.guid);
+            }
+          }
+
+
           closeDialog("add-image");
         }}
       />
@@ -556,7 +584,7 @@ const Designer: FC<{
       </SingleValueContainer>
     );
   };
-  // console.log('finalVisibleAreas', finalVisibleAreas)y
+  console.log('actualAreaId', actualAreaId)
 
   const getTooltipDetail = (name: string) => {
     switch (name) {
@@ -594,8 +622,10 @@ const Designer: FC<{
   };
   window.addEventListener("error", observerErrorHandler);
 
+  // console.log('item', item)
+  // console.log('itemsFiltered', itemsFiltered)
+  console.log('items', items)
   console.log('finalVisibleAreas', finalVisibleAreas)
-  console.log('actualAreaId', actualAreaId)
   return (
     <>
 

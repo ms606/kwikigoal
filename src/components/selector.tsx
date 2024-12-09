@@ -360,7 +360,7 @@ const Selector: FunctionComponent<TrayPreviewOpenButton3DProps> = ({
   };
   window.addEventListener("error", observerErrorHandler);
 
-  // console.log('selectedGroup', selectedGroup)
+  console.log('selectedFilteredAreas', selectedFilteredAreas)
   // console.log('selectOptionName', selectedOptionName)
   return (
     <>
