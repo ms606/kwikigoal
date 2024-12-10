@@ -408,10 +408,12 @@ const Designer: FC<{
 
     // Initialize the logo name based on product name
     let logoName = '';
-    if (product.name === "Rear Panel(s)") {
+    if (product.name === "Rear Panel") {
       logoName = "Rear Panel Logo";
-    } else if (product.name === "Side Panel(s)") {
+    } else if (product.name === "Right Side Panel") {
       logoName = "Side Logo Right";
+    } else if (product.name === "Left Side Panel") {
+      logoName = "Side Logo Left";
     } else {
       return null; // No corresponding logo for the product
     }
@@ -433,9 +435,11 @@ const Designer: FC<{
     // Initialize the logo name based on product name
     let logoName = '';
     if (product.name === "Rear Panel Logo") {
-      logoName = "Rear Panel(s)";
+      logoName = "Rear Panel";
     } else if (product.name === "Side Logo Right") {
-      logoName = "Side Panel(s)";
+      logoName = "Right Side Panel";
+    } else if (product.name === "Side Logo Left") {
+      logoName = "Left Side Panel";
     } else {
       return null; // No corresponding logo for the product
     }
@@ -453,7 +457,7 @@ const Designer: FC<{
       <AddTextDialog
         onClose={() => closeDialog("add-text")}
         onConfirm={(item) => {
-          console.log("item-----------------------", item);
+          // console.log("item-----------------------", item);
 
           // Add the text item to the actual area
           addItemText(item, actualAreaId);
@@ -645,13 +649,15 @@ const Designer: FC<{
       </SingleValueContainer>
     );
   };
-  console.log('actualAreaId', actualAreaId)
+  // console.log('actualAreaId', actualAreaId)
 
   const getTooltipDetail = (name: string) => {
     switch (name) {
-      case "Rear Panel(s)":
+      case "Rear Panel":
         return "Add customization across the rear panels.";
-      case "Side Panel(s)":
+      case "Right Side Panel":
+        return "Add matching customization on left and right side panels.";
+      case "Left Side Panel":
         return "Add matching customization on left and right side panels.";
       case "Top Crossbar":
         return "Add customization to the top cross bar.";
@@ -947,13 +953,14 @@ const Designer: FC<{
                       </span>
                     </span>
                   </Button>
+                  <SupportedFormatsList>
+                    {T._("Supported file formats:", "Composer") +
+                      " " +
+                      supportedFileFormats}
+                  </SupportedFormatsList>
                 </>
               )}
-              <SupportedFormatsList>
-                {T._("Supported file formats:", "Composer") +
-                  " " +
-                  supportedFileFormats}
-              </SupportedFormatsList>
+
 
               {copyrightMessage && copyrightMessage.visible && (
                 <CopyrightMessage>
