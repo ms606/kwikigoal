@@ -777,7 +777,7 @@ const Designer: FC<{
 
 
 
-          <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: '74px', flexFlow: 'wrap' }}>
+          <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: '114px', alignItems: "center", flexFlow: 'wrap' }}>
             {finalVisibleAreas.map((area) => (
               <Area
                 key={area.id}
