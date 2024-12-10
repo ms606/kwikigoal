@@ -394,6 +394,59 @@ const Designer: FC<{
     else return common || image;
   };
 
+
+  ;
+
+  // Function to get the logo id
+  function getLogoId(productId: any) {
+    // Find the product with the given id
+    const product = finalVisibleAreas.find((item) => item.id === productId);
+
+    if (!product) {
+      return null; // Product not found
+    }
+
+    // Initialize the logo name based on product name
+    let logoName = '';
+    if (product.name === "Rear Panel(s)") {
+      logoName = "Rear Panel Logo";
+    } else if (product.name === "Side Panel(s)") {
+      logoName = "Side Logo Right";
+    } else {
+      return null; // No corresponding logo for the product
+    }
+
+    // Find the logo product and return its id
+    const logoProduct = finalVisibleAreas.find((item) => item.name === logoName);
+    return logoProduct ? logoProduct.id : null;
+  }
+
+
+  function getTextId(productId: any) {
+    // Find the product with the given id
+    const product = finalVisibleAreas.find((item) => item.id === productId);
+
+    if (!product) {
+      return null; // Product not found
+    }
+
+    // Initialize the logo name based on product name
+    let logoName = '';
+    if (product.name === "Rear Panel Logo") {
+      logoName = "Rear Panel(s)";
+    } else if (product.name === "Side Logo Right") {
+      logoName = "Side Panel(s)";
+    } else {
+      return null; // No corresponding logo for the product
+    }
+
+    // Find the logo product and return its id
+    const logoProduct = finalVisibleAreas.find((item) => item.name === logoName);
+    return logoProduct ? logoProduct.id : null;
+  }
+  console.log(getLogoId(actualAreaId)); // Outputs: 403940 (or the respective logo id)
+
+
   const handleAddTextClick = () => {
     showDialog(
       "add-text",
@@ -401,19 +454,24 @@ const Designer: FC<{
         onClose={() => closeDialog("add-text")}
         onConfirm={(item) => {
           console.log("item-----------------------", item);
+
+          // Add the text item to the actual area
           addItemText(item, actualAreaId);
 
-          // Check if actualAreaId is 393536 and items are available
-          if (actualAreaId === 393536 && items && Array.isArray(items)) {
-            // Find the logo item with areaId 403940
-            const logo = items.find(item => item.areaId === 403940);
+          // Get the logo ID corresponding to the actual area
+          const removeItemLogoId = getLogoId(actualAreaId);
 
-            // Safely remove the logo item if found
-            if (logo && logo.guid) {
-              removeItem(logo.guid);
-            }
+          if (removeItemLogoId) {
+            // Filter items that match the logo ID's areaId
+            const logoItems = items.filter((item) => item.areaId === removeItemLogoId);
+
+            // Iterate through and remove items
+            logoItems.forEach((logoItem) => {
+              removeItem(logoItem.guid);
+            });
           }
 
+          // Close the dialog
           closeDialog("add-text");
         }}
       />
@@ -431,15 +489,18 @@ const Designer: FC<{
 
           addItemImage(image.imageID, actualAreaId);
 
-          if (actualAreaId === 403940 && items && Array.isArray(items)) {
-            // Find the logo item with areaId 403940
-            const logo = items.find(item => item.areaId === 393536);
+          const removeItemTextId = getTextId(actualAreaId);
 
-            // Safely remove the logo item if found
-            if (logo && logo.guid) {
-              removeItem(logo.guid);
-            }
+          if (removeItemTextId) {
+            // Filter items that match the logo ID's areaId
+            const logoItems = items.filter((item) => item.areaId === removeItemTextId);
+
+            // Iterate through and remove items
+            logoItems.forEach((logoItem) => {
+              removeItem(logoItem.guid);
+            });
           }
+
 
 
           closeDialog("add-image");
@@ -623,7 +684,7 @@ const Designer: FC<{
   window.addEventListener("error", observerErrorHandler);
 
   // console.log('item', item)
-  // console.log('itemsFiltered', itemsFiltered)
+  console.log('itemsFiltered', itemsFiltered)
   console.log('items', items)
   console.log('finalVisibleAreas', finalVisibleAreas)
   return (
