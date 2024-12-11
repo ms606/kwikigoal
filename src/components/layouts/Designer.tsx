@@ -656,9 +656,9 @@ const Designer: FC<{
       case "Rear Panel":
         return "Add customization across the rear panels.";
       case "Right Side Panel":
-        return "Add matching customization on left and right side panels.";
+        return "Add matching customization on  right side panel.";
       case "Left Side Panel":
-        return "Add matching customization on left and right side panels.";
+        return "Add matching customization on left  side panel.";
       case "Top Crossbar":
         return "Add customization to the top cross bar.";
       case "Post Wrap":
