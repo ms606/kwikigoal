@@ -109,12 +109,16 @@ const Viewer = () => {
 					<div>{product?.name}</div>
 					<div>USD {price}</div>	
 				</div>}
+
+				{!isSceneLoading &&
 					<ZoomInIcon isMobile={isMobile} key={'zoomin'} hoverable onClick={zoomIn}>
 						<SearchPlusSolid />
-					</ZoomInIcon>
+					</ZoomInIcon>}
+				{!isSceneLoading &&
+
 					<ZoomOutIcon isMobile={isMobile} key={'zoomout'} hoverable onClick={zoomOut}>
 						<SearchMinusSolid />
-					</ZoomOutIcon>
+					</ZoomOutIcon>}
 										
 					<BottomRightIcons>
 						{hasExplodedMode() && product && !isSceneLoading && (
