@@ -17,8 +17,9 @@ const LoadingLabel = styled.div`
 const LoaderContainer = styled.div`
   height: 10px;
   // width: 600px;
-  width: 76vw;
+  width: 75vw;
   // height: 80vh;
+  margin: 0 auto;
   border-radius: 4px;
   background-color: #dbe2e6;
 
@@ -108,7 +109,7 @@ const ProgressBar = ({ bgColor, completed }) => {
 
   return (
     <div>
-      <VideoPlayer ref={videoRef} id="myVideo" controls aut>
+      <VideoPlayer ref={videoRef} id="myVideo" loop  auto>
         <source src="intro_video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </VideoPlayer>
