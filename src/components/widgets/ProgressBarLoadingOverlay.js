@@ -30,7 +30,7 @@ const ProgressBarLoadingContainer = styled.div`
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15), 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
 
   @media screen and (max-width: 766px){
-   width: 90%;
+   width: 95%;
    height: auto;
   }
 `;
