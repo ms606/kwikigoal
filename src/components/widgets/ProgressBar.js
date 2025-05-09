@@ -17,14 +17,14 @@ const LoadingLabel = styled.div`
 const LoaderContainer = styled.div`
   height: 10px;
   // width: 600px;
-  width: 78vw;
+  width: 77vw;
   // height: 80vh;
   margin: 0 auto;
   border-radius: 4px;
   background-color: #dbe2e6;
 
   @media screen and (max-width: 766px) {
-    width: 310px;
+    width: 100%;
   }
 `;
 
