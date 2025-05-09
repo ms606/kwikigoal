@@ -17,7 +17,7 @@ const LoadingLabel = styled.div`
 const LoaderContainer = styled.div`
   height: 10px;
   // width: 600px;
-  width: 75vw;
+  width: 78vw;
   // height: 80vh;
   margin: 0 auto;
   border-radius: 4px;
@@ -62,8 +62,9 @@ const LoaderFill = styled.div`
 `;
 
 const VideoPlayer = styled.video`
-  width: 76.5vw;
-  height: 67vh;
+  width: 100%;
+  height: 70vh;
+  object-fit: fill;
 
   @media (max-width: 768px) { /* Adjust the breakpoint as needed */
     height: auto;
